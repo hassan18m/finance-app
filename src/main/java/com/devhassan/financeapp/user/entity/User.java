@@ -1,8 +1,13 @@
 package com.devhassan.financeapp.user.entity;
 
+import com.devhassan.financeapp.bankaccount.entity.BankAccount;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity(name = "user")
@@ -29,4 +34,21 @@ public class User {
 
     @Column(name = "password", nullable = false, columnDefinition = "TEXT")
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<BankAccount> bankAccounts = new HashSet<>();
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id); // Use a unique field like id for hashing
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        User user = (User) obj;
+        return id != null && id.equals(user.id); // Use a unique field like id for equality
+    }
 }

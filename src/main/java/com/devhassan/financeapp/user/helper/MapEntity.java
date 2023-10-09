@@ -7,13 +7,13 @@ import com.devhassan.financeapp.user.entity.model.UserResponse;
 public class MapEntity {
 
     public static User requestToEntity(UserRequest userRequest) {
-        return User.builder()
-                .id(userRequest.getId())
-                .firstName(userRequest.getFirstName())
-                .lastName(userRequest.getLastName())
-                .email(userRequest.getEmail())
-                .password(userRequest.getPassword())
-                .build();
+        User user = new User();
+        user.setFirstName(userRequest.getFirstName());
+        user.setLastName(userRequest.getLastName());
+        user.setEmail(userRequest.getEmail());
+        user.setPassword(userRequest.getPassword());
+
+        return user;
     }
 
     public static UserResponse entityToResponse(User user) {
@@ -22,6 +22,7 @@ public class MapEntity {
         userResponse.setFirstName(user.getFirstName());
         userResponse.setLastName(user.getLastName());
         userResponse.setEmail(user.getEmail());
+        userResponse.setBankAccounts(user.getBankAccounts());
 
         return userResponse;
     }
