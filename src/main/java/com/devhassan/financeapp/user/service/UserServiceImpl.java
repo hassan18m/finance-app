@@ -9,7 +9,7 @@ import com.devhassan.financeapp.user.entity.model.UserRequest;
 import com.devhassan.financeapp.user.entity.model.UserResponse;
 import com.devhassan.financeapp.user.exceptions.DuplicateDataException;
 import com.devhassan.financeapp.user.exceptions.NotFoundException;
-import com.devhassan.financeapp.user.helper.MapEntity;
+import com.devhassan.financeapp.globalhelper.MapEntity;
 import com.devhassan.financeapp.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,23 +34,23 @@ public class UserServiceImpl implements UserService {
             throw new DuplicateDataException("Email already used!");
         }
 
-        User user = MapEntity.requestToEntity(userRequest);
+        User user = MapEntity.userRequestToEntity(userRequest);
         userRepository.save(user);
 
-        return MapEntity.entityToResponse(user);
+        return MapEntity.userEntityToResponse(user);
     }
 
     @Override
     public UserResponse findByEmail(String email) {
         return userRepository.findByEmail(email)
-                .map(MapEntity::entityToResponse)
+                .map(MapEntity::userEntityToResponse)
                 .orElseThrow(() -> new NotFoundException("Email not found!"));
     }
 
     @Override
     public UserResponse findById(UUID id) {
         return userRepository.findById(id)
-                .map(MapEntity::entityToResponse)
+                .map(MapEntity::userEntityToResponse)
                 .orElseThrow(NotFoundException::new);
     }
 
@@ -70,6 +70,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(foundUser);
 
 
-        return MapEntity.entityToResponse(foundUser);
+        return MapEntity.userEntityToResponse(foundUser);
     }
 }

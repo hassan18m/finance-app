@@ -27,22 +27,4 @@ public class BankAccountInit {
 
         return bankAccount;
     }
-
-    public static BankAccount initBankAccountTest(BankAccountRequest bankAccountRequest) {
-
-        BankAccount bankAccount = BankAccount.builder()
-                .accountNumber("RO" + randomNumber.toString())
-                .bankName(bankAccountRequest.getBankName())
-                .accountHolderName("test")
-                .accountType(bankAccountRequest.getAccountType())
-                .balance(BigDecimal.valueOf(0))
-                .currency(bankAccountRequest.getCurrency())
-                .openDate(LocalDateTime.now())
-                .closedDate(null)
-                .status(AccountStatus.ACTIVE)
-                .build();
-        randomNumber++;
-
-        return bankAccount;
-    }
 }

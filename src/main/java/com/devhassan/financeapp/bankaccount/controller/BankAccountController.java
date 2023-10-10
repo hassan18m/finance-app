@@ -1,27 +1,36 @@
 package com.devhassan.financeapp.bankaccount.controller;
 
-import com.devhassan.financeapp.bankaccount.entity.BankAccount;
-import com.devhassan.financeapp.bankaccount.entity.model.BankAccountRequest;
-import com.devhassan.financeapp.bankaccount.helper.BankAccountInit;
-import com.devhassan.financeapp.bankaccount.repository.BankAccountRepository;
+import com.devhassan.financeapp.bankaccount.service.BankAccountService;
+import com.devhassan.financeapp.transaction.entity.Transaction;
+import com.devhassan.financeapp.user.exceptions.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/bank-account")
 public class BankAccountController {
-    private final BankAccountRepository bankAccountRepository;
+    private final BankAccountService bankAccountService;
 
-    public BankAccountController(BankAccountRepository bankAccountRepository) {
-        this.bankAccountRepository = bankAccountRepository;
+    public BankAccountController(BankAccountService bankAccountService) {
+        this.bankAccountService = bankAccountService;
     }
 
-    @PostMapping
-    public ResponseEntity<BankAccount> insertBankAccount(@RequestBody BankAccountRequest bankAccountRequest) {
-        BankAccount bankAccount = BankAccountInit.initBankAccountTest(bankAccountRequest);
-        return ResponseEntity.ok(bankAccountRepository.save(bankAccount));
+    @GetMapping("/{accountNumber}")
+    public ResponseEntity<?> getBankAccountByAccountNumber(@PathVariable String accountNumber) {
+        try {
+            return ResponseEntity.ok(bankAccountService.getBankAccountByAccountNumber(accountNumber));
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<?> addTransactionToBankAccount(@PathVariable Long id,@RequestBody Transaction transaction) {
+        try {
+            return ResponseEntity.ok(bankAccountService.addTransactionToBankAccount(id, transaction));
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }

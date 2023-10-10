@@ -2,6 +2,7 @@ package com.devhassan.financeapp.bankaccount.entity;
 
 import com.devhassan.financeapp.bankaccount.entity.enums.AccountStatus;
 import com.devhassan.financeapp.bankaccount.entity.enums.AccountType;
+import com.devhassan.financeapp.transaction.entity.Transaction;
 import com.devhassan.financeapp.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -9,7 +10,9 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity(name = "bank_account")
 @Data
@@ -56,9 +59,12 @@ public class BankAccount {
     @JsonIgnore
     private User user;
 
+    @OneToMany(mappedBy = "bankAccount")
+    private Set<Transaction> transactions = new HashSet<>();
+
     @Override
     public int hashCode() {
-        return Objects.hash(id); // Use a unique field like id for hashing
+        return Objects.hash(id);
     }
 
     @Override
@@ -66,6 +72,6 @@ public class BankAccount {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         BankAccount account = (BankAccount) obj;
-        return id != null && id.equals(account.id); // Use a unique field like id for equality
+        return id != null && id.equals(account.id);
     }
 }
