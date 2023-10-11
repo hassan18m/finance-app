@@ -1,11 +1,13 @@
 package com.devhassan.financeapp.user.entity.model;
 
-import com.devhassan.financeapp.bankaccount.entity.BankAccount;
+import com.devhassan.financeapp.bankaccount.entity.model.BankAccountResponse;
+import com.devhassan.financeapp.budget.entity.Budget;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -18,5 +20,6 @@ public class UserResponse {
     private String firstName;
     private String lastName;
     private String email;
-    private Set<BankAccount> bankAccounts;
+    private Set<BankAccountResponse> bankAccounts;
+    private Set<Budget> budgets;
 }

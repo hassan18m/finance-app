@@ -7,6 +7,7 @@ import com.devhassan.financeapp.user.entity.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 
 public class BankAccountInit {
     private static Long randomNumber = 1111L;
@@ -22,6 +23,7 @@ public class BankAccountInit {
                 .openDate(LocalDateTime.now())
                 .closedDate(null)
                 .status(AccountStatus.ACTIVE)
+                .transactions(new HashSet<>())
                 .build();
         randomNumber++;
 

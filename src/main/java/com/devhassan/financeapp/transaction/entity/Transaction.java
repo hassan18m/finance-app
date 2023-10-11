@@ -1,6 +1,7 @@
 package com.devhassan.financeapp.transaction.entity;
 
 import com.devhassan.financeapp.bankaccount.entity.BankAccount;
+import com.devhassan.financeapp.expensecategory.entity.ExpenseCategory;
 import com.devhassan.financeapp.transaction.entity.enums.PaymentMethod;
 import com.devhassan.financeapp.transaction.entity.enums.TransactionType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,8 +37,9 @@ public class Transaction {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "expense_category")
-    private String expenseCategory;
+    @ManyToOne
+    @JoinColumn(name = "expense_category_id")
+    private ExpenseCategory expenseCategory;
 
     @Column(name = "recipient")
     private String recipient;
@@ -53,4 +55,17 @@ public class Transaction {
     @JoinColumn(name = "bank_account_id", nullable = false)
     @JsonIgnore
     private BankAccount bankAccount;
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Transaction that = (Transaction) object;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

@@ -1,8 +1,11 @@
 package com.devhassan.financeapp.user.entity;
 
 import com.devhassan.financeapp.bankaccount.entity.BankAccount;
+import com.devhassan.financeapp.budget.entity.Budget;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.HashSet;
@@ -24,24 +27,32 @@ public class User {
     private UUID id;
 
     @Column(name = "first_name", nullable = false, columnDefinition = "TEXT")
+    @NotBlank
     private String firstName;
 
     @Column(name = "last_name", nullable = false, columnDefinition = "TEXT")
+    @NotBlank
     private String lastName;
 
     @Column(name = "email", nullable = false, unique = true, columnDefinition = "TEXT")
+    @NotBlank
+    @Email
     private String email;
 
     @Column(name = "password", nullable = false, columnDefinition = "TEXT")
+    @NotBlank
     private String password;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private Set<BankAccount> bankAccounts = new HashSet<>();
 
+    @OneToMany(mappedBy = "user")
+    private Set<Budget> budgets = new HashSet<>();
+
     @Override
     public int hashCode() {
-        return Objects.hash(id); // Use a unique field like id for hashing
+        return Objects.hash(id);
     }
 
     @Override
@@ -49,6 +60,6 @@ public class User {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         User user = (User) obj;
-        return id != null && id.equals(user.id); // Use a unique field like id for equality
+        return id != null && id.equals(user.id);
     }
 }

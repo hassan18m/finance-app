@@ -1,6 +1,7 @@
 package com.devhassan.financeapp.user.controller;
 
 import com.devhassan.financeapp.bankaccount.entity.model.BankAccountRequest;
+import com.devhassan.financeapp.budget.entity.Budget;
 import com.devhassan.financeapp.user.entity.model.UserRequest;
 import com.devhassan.financeapp.user.exceptions.DuplicateDataException;
 import com.devhassan.financeapp.user.exceptions.NotFoundException;
@@ -22,15 +23,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
-    public ResponseEntity<?> insertUser(@RequestBody UserRequest userRequest) {
-        try {
-            return ResponseEntity.ok(userService.insertUser(userRequest));
-        } catch (DuplicateDataException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
-        }
-    }
-
     @GetMapping
     public ResponseEntity<?> findByEmail(@RequestParam String email) {
         try {
@@ -49,10 +41,28 @@ public class UserController {
         }
     }
 
+    @PostMapping
+    public ResponseEntity<?> insertUser(@RequestBody UserRequest userRequest) {
+        try {
+            return ResponseEntity.ok(userService.insertUser(userRequest));
+        } catch (DuplicateDataException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
     @PostMapping("/{id}")
     public ResponseEntity<?> addBankAccountToUser(@PathVariable UUID id, @RequestBody BankAccountRequest bankAccountRequest) {
         try {
             return ResponseEntity.ok(userService.addBankAccount(id, bankAccountRequest));
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("{userId}/add-budget")
+    public ResponseEntity<?> setBudgetToUser(@PathVariable UUID userId, @RequestBody Budget budget) {
+        try {
+            return ResponseEntity.ok(userService.setBudget(userId, budget));
         } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }

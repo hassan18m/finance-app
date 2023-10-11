@@ -2,7 +2,7 @@ package com.devhassan.financeapp.bankaccount.entity.model;
 
 import com.devhassan.financeapp.bankaccount.entity.enums.AccountStatus;
 import com.devhassan.financeapp.bankaccount.entity.enums.AccountType;
-import com.devhassan.financeapp.transaction.entity.Transaction;
+import com.devhassan.financeapp.transaction.entity.model.TransactionResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,5 +28,5 @@ public class BankAccountResponse {
     private LocalDateTime openDate;
     private LocalDateTime closedDate;
     private AccountStatus status;
-    private Set<Transaction> transactions = new HashSet<>();
+    private Set<TransactionResponse> transactions = new HashSet<>();
 }

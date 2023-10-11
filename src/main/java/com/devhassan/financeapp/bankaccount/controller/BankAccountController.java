@@ -1,7 +1,7 @@
 package com.devhassan.financeapp.bankaccount.controller;
 
 import com.devhassan.financeapp.bankaccount.service.BankAccountService;
-import com.devhassan.financeapp.transaction.entity.Transaction;
+import com.devhassan.financeapp.transaction.entity.model.TransactionRequest;
 import com.devhassan.financeapp.user.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +26,9 @@ public class BankAccountController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<?> addTransactionToBankAccount(@PathVariable Long id,@RequestBody Transaction transaction) {
+    public ResponseEntity<?> addTransactionToBankAccount(@PathVariable Long id, @RequestBody TransactionRequest transactionRequest) {
         try {
-            return ResponseEntity.ok(bankAccountService.addTransactionToBankAccount(id, transaction));
+            return ResponseEntity.ok(bankAccountService.addTransactionToBankAccount(id, transactionRequest));
         } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }

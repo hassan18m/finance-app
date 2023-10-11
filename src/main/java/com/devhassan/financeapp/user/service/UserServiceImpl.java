@@ -4,6 +4,8 @@ import com.devhassan.financeapp.bankaccount.entity.BankAccount;
 import com.devhassan.financeapp.bankaccount.entity.model.BankAccountRequest;
 import com.devhassan.financeapp.bankaccount.helper.BankAccountInit;
 import com.devhassan.financeapp.bankaccount.repository.BankAccountRepository;
+import com.devhassan.financeapp.budget.entity.Budget;
+import com.devhassan.financeapp.budget.repository.BudgetRepository;
 import com.devhassan.financeapp.user.entity.User;
 import com.devhassan.financeapp.user.entity.model.UserRequest;
 import com.devhassan.financeapp.user.entity.model.UserResponse;
@@ -21,11 +23,15 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final BankAccountRepository bankAccountRepository;
+    private final BudgetRepository budgetRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, BankAccountRepository bankAccountRepository) {
+    public UserServiceImpl(UserRepository userRepository,
+                           BankAccountRepository bankAccountRepository,
+                           BudgetRepository budgetRepository) {
         this.userRepository = userRepository;
         this.bankAccountRepository = bankAccountRepository;
+        this.budgetRepository = budgetRepository;
     }
 
     @Override
@@ -69,6 +75,22 @@ public class UserServiceImpl implements UserService {
         bankAccountRepository.save(bankAccount);
         userRepository.save(foundUser);
 
+
+        return MapEntity.userEntityToResponse(foundUser);
+    }
+
+    @Override
+    public UserResponse setBudget(UUID userId, Budget budget) {
+        User foundUser = userRepository.findById(userId)
+                .orElseThrow(NotFoundException::new);
+
+        Set<Budget> userBudgets = foundUser.getBudgets();
+        userBudgets.add(budget);
+
+        budget.setUser(foundUser);
+
+        budgetRepository.save(budget);
+        userRepository.save(foundUser);
 
         return MapEntity.userEntityToResponse(foundUser);
     }

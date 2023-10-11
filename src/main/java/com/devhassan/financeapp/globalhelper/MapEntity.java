@@ -2,9 +2,16 @@ package com.devhassan.financeapp.globalhelper;
 
 import com.devhassan.financeapp.bankaccount.entity.BankAccount;
 import com.devhassan.financeapp.bankaccount.entity.model.BankAccountResponse;
+import com.devhassan.financeapp.expensecategory.entity.ExpenseCategory;
+import com.devhassan.financeapp.expensecategory.entity.model.ExpenseCategoryResponse;
+import com.devhassan.financeapp.transaction.entity.Transaction;
+import com.devhassan.financeapp.transaction.entity.model.TransactionRequest;
+import com.devhassan.financeapp.transaction.entity.model.TransactionResponse;
 import com.devhassan.financeapp.user.entity.User;
 import com.devhassan.financeapp.user.entity.model.UserRequest;
 import com.devhassan.financeapp.user.entity.model.UserResponse;
+
+import java.util.stream.Collectors;
 
 public class MapEntity {
 
@@ -24,7 +31,11 @@ public class MapEntity {
         userResponse.setFirstName(user.getFirstName());
         userResponse.setLastName(user.getLastName());
         userResponse.setEmail(user.getEmail());
-        userResponse.setBankAccounts(user.getBankAccounts());
+        userResponse.setBankAccounts(user.getBankAccounts()
+                .stream()
+                .map(MapEntity::bankAccountEntityToResponse)
+                .collect(Collectors.toSet()));
+        userResponse.setBudgets(user.getBudgets());
 
         return userResponse;
     }
@@ -41,8 +52,51 @@ public class MapEntity {
         bankAccountResponse.setOpenDate(bankAccount.getOpenDate());
         bankAccountResponse.setClosedDate(bankAccount.getClosedDate());
         bankAccountResponse.setStatus(bankAccount.getStatus());
-        bankAccountResponse.setTransactions(bankAccount.getTransactions());
+        bankAccountResponse.setTransactions(bankAccount.getTransactions()
+                .stream()
+                .map(MapEntity::transactionEntityToResponse)
+                .collect(Collectors.toSet()));
 
         return bankAccountResponse;
+    }
+
+    public static Transaction transactionRequestToEntity(TransactionRequest transactionRequest) {
+        Transaction transaction = new Transaction();
+
+        ExpenseCategory expenseCategory = new ExpenseCategory();
+        expenseCategory.setCategoryName(transactionRequest.getCategoryName());
+
+        transaction.setAmount(transactionRequest.getAmount());
+        transaction.setTransactionType(transactionRequest.getTransactionType());
+        transaction.setDescription(transactionRequest.getDescription());
+        transaction.setExpenseCategory(expenseCategory);
+        transaction.setRecipient(transactionRequest.getRecipient());
+        transaction.setPaymentMethod(transactionRequest.getPaymentMethod());
+        transaction.setLocation(transactionRequest.getLocation());
+
+        return transaction;
+    }
+
+    public static TransactionResponse transactionEntityToResponse(Transaction transaction) {
+        TransactionResponse transactionResponse = new TransactionResponse();
+        transactionResponse.setId(transaction.getId());
+        transactionResponse.setAmount(transaction.getAmount());
+        transactionResponse.setTransactionDateTime(transaction.getTransactionDateTime());
+        transactionResponse.setTransactionType(transaction.getTransactionType());
+        transactionResponse.setDescription(transaction.getDescription());
+        transactionResponse.setExpenseCategory(expenseCategoryEntityToResponse(transaction.getExpenseCategory()));
+        transactionResponse.setRecipient(transaction.getRecipient());
+        transactionResponse.setPaymentMethod(transaction.getPaymentMethod());
+        transactionResponse.setLocation(transaction.getLocation());
+
+        return transactionResponse;
+    }
+
+    public static ExpenseCategoryResponse expenseCategoryEntityToResponse(ExpenseCategory expenseCategory) {
+        ExpenseCategoryResponse expenseCategoryResponse = new ExpenseCategoryResponse();
+        expenseCategoryResponse.setId(expenseCategory.getId());
+        expenseCategoryResponse.setCategoryName(expenseCategory.getCategoryName());
+
+        return expenseCategoryResponse;
     }
 }

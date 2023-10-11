@@ -1,6 +1,7 @@
 package com.devhassan.financeapp.user.service;
 
 import com.devhassan.financeapp.bankaccount.entity.model.BankAccountRequest;
+import com.devhassan.financeapp.budget.entity.Budget;
 import com.devhassan.financeapp.user.entity.model.UserRequest;
 import com.devhassan.financeapp.user.entity.model.UserResponse;
 
@@ -14,4 +15,6 @@ public interface UserService {
     UserResponse findById(UUID id);
 
     UserResponse addBankAccount(UUID userId, BankAccountRequest bankAccountRequest);
+
+    UserResponse setBudget(UUID userId, Budget budget);
 }
