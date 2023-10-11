@@ -2,6 +2,7 @@ package com.devhassan.financeapp.user.entity.model;
 
 import com.devhassan.financeapp.bankaccount.entity.model.BankAccountResponse;
 import com.devhassan.financeapp.budget.entity.Budget;
+import com.devhassan.financeapp.budget.entity.model.BudgetResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,5 @@ public class UserResponse {
     private String lastName;
     private String email;
     private Set<BankAccountResponse> bankAccounts;
-    private Set<Budget> budgets;
+    private Set<BudgetResponse> budgets;
 }

@@ -2,6 +2,9 @@ package com.devhassan.financeapp.globalhelper;
 
 import com.devhassan.financeapp.bankaccount.entity.BankAccount;
 import com.devhassan.financeapp.bankaccount.entity.model.BankAccountResponse;
+import com.devhassan.financeapp.budget.entity.Budget;
+import com.devhassan.financeapp.budget.entity.model.BudgetRequest;
+import com.devhassan.financeapp.budget.entity.model.BudgetResponse;
 import com.devhassan.financeapp.expensecategory.entity.ExpenseCategory;
 import com.devhassan.financeapp.expensecategory.entity.model.ExpenseCategoryResponse;
 import com.devhassan.financeapp.transaction.entity.Transaction;
@@ -14,7 +17,6 @@ import com.devhassan.financeapp.user.entity.model.UserResponse;
 import java.util.stream.Collectors;
 
 public class MapEntity {
-
     public static User userRequestToEntity(UserRequest userRequest) {
         User user = new User();
         user.setFirstName(userRequest.getFirstName());
@@ -35,7 +37,10 @@ public class MapEntity {
                 .stream()
                 .map(MapEntity::bankAccountEntityToResponse)
                 .collect(Collectors.toSet()));
-        userResponse.setBudgets(user.getBudgets());
+        userResponse.setBudgets(user.getBudgets()
+                .stream()
+                .map(MapEntity::budgetEntityToResponse)
+                .collect(Collectors.toSet()));
 
         return userResponse;
     }
@@ -98,5 +103,28 @@ public class MapEntity {
         expenseCategoryResponse.setCategoryName(expenseCategory.getCategoryName());
 
         return expenseCategoryResponse;
+    }
+
+    public static Budget budgetRequestToEntity(BudgetRequest budgetRequest) {
+        Budget budget = new Budget();
+        budget.setAmount(budgetRequest.getAmount());
+        budget.setStartDate(budgetRequest.getStartDate());
+        budget.setEndDate(budgetRequest.getEndDate());
+
+        return budget;
+    }
+
+    public static BudgetResponse budgetEntityToResponse(Budget budget) {
+        BudgetResponse budgetResponse = new BudgetResponse();
+        budgetResponse.setId(budget.getId());
+        budgetResponse.setAmount(budget.getAmount());
+        budgetResponse.setStartDate(budget.getStartDate());
+        budgetResponse.setEndDate(budget.getEndDate());
+        budgetResponse.setExpenseCategories(budget.getExpenseCategories()
+                .stream()
+                .map(MapEntity::expenseCategoryEntityToResponse)
+                .collect(Collectors.toSet()));
+
+        return budgetResponse;
     }
 }

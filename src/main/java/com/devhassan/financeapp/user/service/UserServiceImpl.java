@@ -5,7 +5,10 @@ import com.devhassan.financeapp.bankaccount.entity.model.BankAccountRequest;
 import com.devhassan.financeapp.bankaccount.helper.BankAccountInit;
 import com.devhassan.financeapp.bankaccount.repository.BankAccountRepository;
 import com.devhassan.financeapp.budget.entity.Budget;
+import com.devhassan.financeapp.budget.entity.model.BudgetRequest;
 import com.devhassan.financeapp.budget.repository.BudgetRepository;
+import com.devhassan.financeapp.expensecategory.entity.ExpenseCategory;
+import com.devhassan.financeapp.expensecategory.repository.ExpenseCategoryRepository;
 import com.devhassan.financeapp.user.entity.User;
 import com.devhassan.financeapp.user.entity.model.UserRequest;
 import com.devhassan.financeapp.user.entity.model.UserResponse;
@@ -16,6 +19,8 @@ import com.devhassan.financeapp.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -24,14 +29,17 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final BankAccountRepository bankAccountRepository;
     private final BudgetRepository budgetRepository;
+    private final ExpenseCategoryRepository expenseCategoryRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            BankAccountRepository bankAccountRepository,
-                           BudgetRepository budgetRepository) {
+                           BudgetRepository budgetRepository,
+                           ExpenseCategoryRepository expenseCategoryRepository) {
         this.userRepository = userRepository;
         this.bankAccountRepository = bankAccountRepository;
         this.budgetRepository = budgetRepository;
+        this.expenseCategoryRepository = expenseCategoryRepository;
     }
 
     @Override
@@ -80,9 +88,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse setBudget(UUID userId, Budget budget) {
+    public UserResponse setBudget(UUID userId, BudgetRequest budgetRequest) {
         User foundUser = userRepository.findById(userId)
                 .orElseThrow(NotFoundException::new);
+
+        Budget budget = MapEntity.budgetRequestToEntity(budgetRequest);
+        setExpenseCategoriesToBudget(budget, budgetRequest);
 
         Set<Budget> userBudgets = foundUser.getBudgets();
         userBudgets.add(budget);
@@ -93,5 +104,18 @@ public class UserServiceImpl implements UserService {
         userRepository.save(foundUser);
 
         return MapEntity.userEntityToResponse(foundUser);
+    }
+
+    private void setExpenseCategoriesToBudget(Budget budget, BudgetRequest budgetRequest) {
+        List<ExpenseCategory> expenseCategories = expenseCategoryRepository.findAll();
+        Set<ExpenseCategory> expenseCategoriesForBudget = new HashSet<>();
+
+        expenseCategories.forEach(expenseCategory -> budgetRequest.getExpenseCategories().forEach(categoryName -> {
+            if (categoryName.equals(expenseCategory.getCategoryName())) {
+                expenseCategoriesForBudget.add(expenseCategory);
+            }
+        }));
+
+        budget.setExpenseCategories(expenseCategoriesForBudget);
     }
 }

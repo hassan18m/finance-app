@@ -1,7 +1,7 @@
 package com.devhassan.financeapp.user.controller;
 
 import com.devhassan.financeapp.bankaccount.entity.model.BankAccountRequest;
-import com.devhassan.financeapp.budget.entity.Budget;
+import com.devhassan.financeapp.budget.entity.model.BudgetRequest;
 import com.devhassan.financeapp.user.entity.model.UserRequest;
 import com.devhassan.financeapp.user.exceptions.DuplicateDataException;
 import com.devhassan.financeapp.user.exceptions.NotFoundException;
@@ -60,9 +60,9 @@ public class UserController {
     }
 
     @PostMapping("{userId}/add-budget")
-    public ResponseEntity<?> setBudgetToUser(@PathVariable UUID userId, @RequestBody Budget budget) {
+    public ResponseEntity<?> setBudgetToUser(@PathVariable UUID userId, @RequestBody BudgetRequest budgetRequest) {
         try {
-            return ResponseEntity.ok(userService.setBudget(userId, budget));
+            return ResponseEntity.ok(userService.setBudget(userId, budgetRequest));
         } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }

@@ -25,10 +25,10 @@ public class BankAccountController {
         }
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<?> addTransactionToBankAccount(@PathVariable Long id, @RequestBody TransactionRequest transactionRequest) {
+    @PostMapping("/add-transaction/{bankAccountId}")
+    public ResponseEntity<?> addTransactionToBankAccount(@PathVariable Long bankAccountId, @RequestBody TransactionRequest transactionRequest) {
         try {
-            return ResponseEntity.ok(bankAccountService.addTransactionToBankAccount(id, transactionRequest));
+            return ResponseEntity.ok(bankAccountService.addTransactionToBankAccount(bankAccountId, transactionRequest));
         } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
