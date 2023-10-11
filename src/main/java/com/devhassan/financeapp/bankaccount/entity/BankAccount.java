@@ -4,7 +4,6 @@ import com.devhassan.financeapp.bankaccount.entity.enums.AccountStatus;
 import com.devhassan.financeapp.bankaccount.entity.enums.AccountType;
 import com.devhassan.financeapp.transaction.entity.Transaction;
 import com.devhassan.financeapp.user.entity.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -56,7 +55,6 @@ public class BankAccount {
     private AccountStatus status;
 
     @ManyToOne
-    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "bankAccount")

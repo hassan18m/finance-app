@@ -3,7 +3,6 @@ package com.devhassan.financeapp.bankaccount.service;
 import com.devhassan.financeapp.bankaccount.entity.BankAccount;
 import com.devhassan.financeapp.bankaccount.entity.model.BankAccountResponse;
 import com.devhassan.financeapp.bankaccount.repository.BankAccountRepository;
-import com.devhassan.financeapp.expensecategory.entity.ExpenseCategory;
 import com.devhassan.financeapp.expensecategory.repository.ExpenseCategoryRepository;
 import com.devhassan.financeapp.globalhelper.MapEntity;
 import com.devhassan.financeapp.transaction.entity.Transaction;

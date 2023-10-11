@@ -2,7 +2,6 @@ package com.devhassan.financeapp.user.entity;
 
 import com.devhassan.financeapp.bankaccount.entity.BankAccount;
 import com.devhassan.financeapp.budget.entity.Budget;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -44,7 +43,6 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
     private Set<BankAccount> bankAccounts = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
