@@ -2,6 +2,7 @@ package com.devhassan.financeapp.user.entity;
 
 import com.devhassan.financeapp.bankaccount.entity.BankAccount;
 import com.devhassan.financeapp.budget.entity.Budget;
+import com.devhassan.financeapp.financialInsight.entity.FinancialInsight;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -47,6 +48,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Set<Budget> budgets = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<FinancialInsight> financialInsights = new HashSet<>();
 
     @Override
     public int hashCode() {

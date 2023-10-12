@@ -41,6 +41,7 @@ public class MapEntity {
                 .stream()
                 .map(MapEntity::budgetEntityToResponse)
                 .collect(Collectors.toSet()));
+        userResponse.setFinancialInsights(user.getFinancialInsights().stream().toList());
 
         return userResponse;
     }
