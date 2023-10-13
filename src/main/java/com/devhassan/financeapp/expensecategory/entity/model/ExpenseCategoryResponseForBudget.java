@@ -7,9 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString
-public class ExpenseCategoryResponse {
-    private Long id;
+public class ExpenseCategoryResponseForBudget {
     private String categoryName;
 }
-
-

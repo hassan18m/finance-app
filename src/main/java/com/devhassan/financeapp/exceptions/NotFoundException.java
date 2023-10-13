@@ -1,4 +1,4 @@
-package com.devhassan.financeapp.user.exceptions;
+package com.devhassan.financeapp.exceptions;
 
 public class NotFoundException extends RuntimeException{
 

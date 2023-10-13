@@ -1,6 +1,6 @@
 package com.devhassan.financeapp.budget.entity.model;
 
-import com.devhassan.financeapp.expensecategory.entity.model.ExpenseCategoryResponse;
+import com.devhassan.financeapp.expensecategory.entity.model.ExpenseCategoryResponseForBudget;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -18,6 +18,6 @@ public class BudgetResponse {
     private BigDecimal amount;
     private LocalDate startDate;
     private LocalDate endDate;
-    Set<ExpenseCategoryResponse> expenseCategories = new HashSet<>();
+    Set<ExpenseCategoryResponseForBudget> expenseCategories = new HashSet<>();
 }
 

@@ -1,8 +1,9 @@
 package com.devhassan.financeapp.bankaccount.controller;
 
 import com.devhassan.financeapp.bankaccount.service.BankAccountService;
+import com.devhassan.financeapp.exceptions.NegativeBalanceException;
 import com.devhassan.financeapp.transaction.entity.model.TransactionRequest;
-import com.devhassan.financeapp.user.exceptions.NotFoundException;
+import com.devhassan.financeapp.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,8 @@ public class BankAccountController {
             return ResponseEntity.ok(bankAccountService.addTransactionToBankAccount(bankAccountId, transactionRequest));
         } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (NegativeBalanceException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

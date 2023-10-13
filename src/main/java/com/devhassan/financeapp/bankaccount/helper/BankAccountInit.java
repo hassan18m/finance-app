@@ -18,7 +18,7 @@ public class BankAccountInit {
                 .bankName(bankAccountRequest.getBankName())
                 .accountHolderName(user.getFirstName() + " " + user.getLastName())
                 .accountType(bankAccountRequest.getAccountType())
-                .balance(BigDecimal.valueOf(0))
+                .balance(BigDecimal.valueOf(100.00))
                 .currency(bankAccountRequest.getCurrency())
                 .openDate(LocalDateTime.now())
                 .closedDate(null)

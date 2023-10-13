@@ -1,6 +1,6 @@
 package com.devhassan.financeapp.transaction.entity.model;
 
-import com.devhassan.financeapp.expensecategory.entity.model.ExpenseCategoryResponse;
+import com.devhassan.financeapp.expensecategory.entity.model.ExpenseCategoryResponseForTransaction;
 import com.devhassan.financeapp.transaction.entity.enums.PaymentMethod;
 import com.devhassan.financeapp.transaction.entity.enums.TransactionType;
 
@@ -19,7 +19,7 @@ public class TransactionResponse {
     private LocalDateTime transactionDateTime;
     private TransactionType transactionType;
     private String description;
-    private ExpenseCategoryResponse expenseCategory;
+    private ExpenseCategoryResponseForTransaction expenseCategory;
     private String recipient;
     private PaymentMethod paymentMethod;
     private String location;

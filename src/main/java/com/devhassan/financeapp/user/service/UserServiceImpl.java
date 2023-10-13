@@ -12,8 +12,8 @@ import com.devhassan.financeapp.expensecategory.repository.ExpenseCategoryReposi
 import com.devhassan.financeapp.user.entity.User;
 import com.devhassan.financeapp.user.entity.model.UserRequest;
 import com.devhassan.financeapp.user.entity.model.UserResponse;
-import com.devhassan.financeapp.user.exceptions.DuplicateDataException;
-import com.devhassan.financeapp.user.exceptions.NotFoundException;
+import com.devhassan.financeapp.exceptions.DuplicateDataException;
+import com.devhassan.financeapp.exceptions.NotFoundException;
 import com.devhassan.financeapp.globalhelper.MapEntity;
 import com.devhassan.financeapp.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -17,7 +17,7 @@ public class FinancialInsight {
     @Column(name = "id", nullable = false, unique = true, updatable = false)
     private Long id;
 
-    @Column(name = "insight_type",nullable = false)
+    @Column(name = "insight_type", nullable = false)
     private String insightType;
 
     @Column(name = "description")
@@ -27,4 +27,5 @@ public class FinancialInsight {
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
+
 }

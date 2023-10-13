@@ -5,8 +5,10 @@ import com.devhassan.financeapp.bankaccount.entity.model.BankAccountResponse;
 import com.devhassan.financeapp.budget.entity.Budget;
 import com.devhassan.financeapp.budget.entity.model.BudgetRequest;
 import com.devhassan.financeapp.budget.entity.model.BudgetResponse;
+import com.devhassan.financeapp.budget.entity.model.BudgetResponseForExpenseCategory;
 import com.devhassan.financeapp.expensecategory.entity.ExpenseCategory;
-import com.devhassan.financeapp.expensecategory.entity.model.ExpenseCategoryResponse;
+import com.devhassan.financeapp.expensecategory.entity.model.ExpenseCategoryResponseForBudget;
+import com.devhassan.financeapp.expensecategory.entity.model.ExpenseCategoryResponseForTransaction;
 import com.devhassan.financeapp.transaction.entity.Transaction;
 import com.devhassan.financeapp.transaction.entity.model.TransactionRequest;
 import com.devhassan.financeapp.transaction.entity.model.TransactionResponse;
@@ -90,7 +92,7 @@ public class MapEntity {
         transactionResponse.setTransactionDateTime(transaction.getTransactionDateTime());
         transactionResponse.setTransactionType(transaction.getTransactionType());
         transactionResponse.setDescription(transaction.getDescription());
-        transactionResponse.setExpenseCategory(expenseCategoryEntityToResponse(transaction.getExpenseCategory()));
+        transactionResponse.setExpenseCategory(expenseCategoryForTransactionEntityToResponse(transaction.getExpenseCategory()));
         transactionResponse.setRecipient(transaction.getRecipient());
         transactionResponse.setPaymentMethod(transaction.getPaymentMethod());
         transactionResponse.setLocation(transaction.getLocation());
@@ -98,12 +100,22 @@ public class MapEntity {
         return transactionResponse;
     }
 
-    public static ExpenseCategoryResponse expenseCategoryEntityToResponse(ExpenseCategory expenseCategory) {
-        ExpenseCategoryResponse expenseCategoryResponse = new ExpenseCategoryResponse();
-        expenseCategoryResponse.setId(expenseCategory.getId());
-        expenseCategoryResponse.setCategoryName(expenseCategory.getCategoryName());
+    public static ExpenseCategoryResponseForTransaction expenseCategoryForTransactionEntityToResponse(ExpenseCategory expenseCategory) {
+        ExpenseCategoryResponseForTransaction expenseCategoryResponseForTransaction = new ExpenseCategoryResponseForTransaction();
+        expenseCategoryResponseForTransaction.setCategoryName(expenseCategory.getCategoryName());
+        expenseCategoryResponseForTransaction.setBudgetResponse(expenseCategory
+                .getBudgets()
+                .stream().map(MapEntity::budgetForExpenseCategoryEntityToResponse)
+                .collect(Collectors.toSet()));
 
-        return expenseCategoryResponse;
+        return expenseCategoryResponseForTransaction;
+    }
+
+    public static ExpenseCategoryResponseForBudget expenseCategoryForBudgetEntityToResponse(ExpenseCategory expenseCategory) {
+        ExpenseCategoryResponseForBudget expenseCategoryResponseForTransaction = new ExpenseCategoryResponseForBudget();
+        expenseCategoryResponseForTransaction.setCategoryName(expenseCategory.getCategoryName());
+
+        return expenseCategoryResponseForTransaction;
     }
 
     public static Budget budgetRequestToEntity(BudgetRequest budgetRequest) {
@@ -123,9 +135,17 @@ public class MapEntity {
         budgetResponse.setEndDate(budget.getEndDate());
         budgetResponse.setExpenseCategories(budget.getExpenseCategories()
                 .stream()
-                .map(MapEntity::expenseCategoryEntityToResponse)
+                .map(MapEntity::expenseCategoryForBudgetEntityToResponse)
                 .collect(Collectors.toSet()));
 
         return budgetResponse;
+    }
+
+    public static BudgetResponseForExpenseCategory budgetForExpenseCategoryEntityToResponse(Budget budget) {
+        BudgetResponseForExpenseCategory budgetResponseForExpenseCategory = new BudgetResponseForExpenseCategory();
+        budgetResponseForExpenseCategory.setId(budget.getId());
+        budgetResponseForExpenseCategory.setAmount(budget.getAmount());
+
+        return budgetResponseForExpenseCategory;
     }
 }
