@@ -2,6 +2,7 @@ package com.devhassan.financeapp.expensecategory.entity;
 
 import com.devhassan.financeapp.budget.entity.Budget;
 import com.devhassan.financeapp.transaction.entity.Transaction;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

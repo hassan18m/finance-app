@@ -1,7 +1,6 @@
 package com.devhassan.financeapp.bankaccount.controller;
 
 import com.devhassan.financeapp.bankaccount.service.BankAccountService;
-import com.devhassan.financeapp.exceptions.NegativeBalanceException;
 import com.devhassan.financeapp.transaction.entity.model.TransactionRequest;
 import com.devhassan.financeapp.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -9,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/bank-account")
+@RequestMapping("/api/v1/bank-accounts")
 public class BankAccountController {
     private final BankAccountService bankAccountService;
 
@@ -26,14 +25,21 @@ public class BankAccountController {
         }
     }
 
-    @PostMapping("/add-transaction/{bankAccountId}")
-    public ResponseEntity<?> addTransactionToBankAccount(@PathVariable Long bankAccountId, @RequestBody TransactionRequest transactionRequest) {
+    @PostMapping("{bankAccountId}/transactions/expense")
+    public ResponseEntity<?> addExpenseTransactionToBankAccount(@PathVariable Long bankAccountId, @RequestBody TransactionRequest transactionRequest) {
         try {
-            return ResponseEntity.ok(bankAccountService.addTransactionToBankAccount(bankAccountId, transactionRequest));
+            return ResponseEntity.ok(bankAccountService.addExpenseTransactionToBankAccount(bankAccountId, transactionRequest));
         } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (NegativeBalanceException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("{bankAccountId}/transactions/income")
+    public ResponseEntity<?> addIncomeTransactionToBankAccount(@PathVariable Long bankAccountId, @RequestBody TransactionRequest transactionRequest) {
+        try {
+            return ResponseEntity.ok(bankAccountService.addIncomeTransactionToBankAccount(bankAccountId, transactionRequest));
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 }

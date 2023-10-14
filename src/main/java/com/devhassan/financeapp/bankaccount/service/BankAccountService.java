@@ -6,5 +6,8 @@ import com.devhassan.financeapp.transaction.entity.model.TransactionRequest;
 public interface BankAccountService {
     BankAccountResponse getBankAccountByAccountNumber(String accountNumber);
 
-    BankAccountResponse addTransactionToBankAccount(Long bankAccountId, TransactionRequest transactionRequest);
+    BankAccountResponse addExpenseTransactionToBankAccount(Long bankAccountId, TransactionRequest transactionRequest);
+
+    BankAccountResponse addIncomeTransactionToBankAccount(Long bankAccountId, TransactionRequest transactionRequest);
+
 }

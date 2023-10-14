@@ -2,6 +2,7 @@ package com.devhassan.financeapp.bankaccount.entity.model;
 
 import com.devhassan.financeapp.bankaccount.entity.enums.AccountStatus;
 import com.devhassan.financeapp.bankaccount.entity.enums.AccountType;
+
 import com.devhassan.financeapp.transaction.entity.model.TransactionResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +11,6 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -28,5 +28,5 @@ public class BankAccountResponse {
     private LocalDateTime openDate;
     private LocalDateTime closedDate;
     private AccountStatus status;
-    private Set<TransactionResponse> transactions = new HashSet<>();
+    private Set<TransactionResponse> transactions;
 }

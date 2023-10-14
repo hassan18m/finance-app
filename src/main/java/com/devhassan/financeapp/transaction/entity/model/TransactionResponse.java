@@ -4,14 +4,16 @@ import com.devhassan.financeapp.expensecategory.entity.model.ExpenseCategoryResp
 import com.devhassan.financeapp.transaction.entity.enums.PaymentMethod;
 import com.devhassan.financeapp.transaction.entity.enums.TransactionType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString
 public class TransactionResponse {
     private Long id;
@@ -19,8 +21,24 @@ public class TransactionResponse {
     private LocalDateTime transactionDateTime;
     private TransactionType transactionType;
     private String description;
+    //For income transactions
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private ExpenseCategoryResponseForTransaction expenseCategory;
+
     private String recipient;
     private PaymentMethod paymentMethod;
     private String location;
+
+    public TransactionResponse(Long id, BigDecimal amount, LocalDateTime transactionDateTime,
+                               TransactionType transactionType, String description,
+                               String recipient, PaymentMethod paymentMethod, String location) {
+        this.id = id;
+        this.amount = amount;
+        this.transactionDateTime = transactionDateTime;
+        this.transactionType = transactionType;
+        this.description = description;
+        this.recipient = recipient;
+        this.paymentMethod = paymentMethod;
+        this.location = location;
+    }
 }

@@ -4,6 +4,7 @@ import com.devhassan.financeapp.bankaccount.entity.BankAccount;
 import com.devhassan.financeapp.expensecategory.entity.ExpenseCategory;
 import com.devhassan.financeapp.transaction.entity.enums.PaymentMethod;
 import com.devhassan.financeapp.transaction.entity.enums.TransactionType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -52,7 +53,21 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(name = "bank_account_id", nullable = false)
+    @JsonIgnore
     private BankAccount bankAccount;
+
+    public Transaction(BigDecimal amount,
+                       LocalDateTime transactionDateTime, TransactionType transactionType,
+                       String description, String recipient, PaymentMethod paymentMethod,
+                       String location) {
+        this.amount = amount;
+        this.transactionDateTime = transactionDateTime;
+        this.transactionType = transactionType;
+        this.description = description;
+        this.recipient = recipient;
+        this.paymentMethod = paymentMethod;
+        this.location = location;
+    }
 
     @Override
     public boolean equals(Object object) {

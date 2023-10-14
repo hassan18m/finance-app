@@ -1,7 +1,6 @@
 package com.devhassan.financeapp.transaction.entity.model;
 
 import com.devhassan.financeapp.transaction.entity.enums.PaymentMethod;
-import com.devhassan.financeapp.transaction.entity.enums.TransactionType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,6 @@ import java.math.BigDecimal;
 @ToString
 public class TransactionRequest {
     private BigDecimal amount;
-    private TransactionType transactionType;
     private String description;
     private String categoryName;
     private String recipient;
