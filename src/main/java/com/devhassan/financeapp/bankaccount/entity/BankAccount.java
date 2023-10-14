@@ -10,7 +10,6 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -60,7 +59,7 @@ public class BankAccount {
     private User user;
 
     @OneToMany(mappedBy = "bankAccount")
-    private Set<Transaction> transactions = new HashSet<>();
+    private Set<Transaction> transactions;
 
     @Override
     public int hashCode() {

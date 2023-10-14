@@ -1,10 +1,9 @@
 package com.devhassan.financeapp.transaction.entity.model;
 
-import com.devhassan.financeapp.expensecategory.entity.model.ExpenseCategoryResponseForTransaction;
+import com.devhassan.financeapp.expensecategory.entity.model.ExpenseCategoryResponse;
 import com.devhassan.financeapp.transaction.entity.enums.PaymentMethod;
 import com.devhassan.financeapp.transaction.entity.enums.TransactionType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
@@ -23,7 +22,7 @@ public class TransactionResponse {
     private String description;
     //For income transactions
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private ExpenseCategoryResponseForTransaction expenseCategory;
+    private ExpenseCategoryResponse expenseCategory;
 
     private String recipient;
     private PaymentMethod paymentMethod;

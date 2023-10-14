@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 
 public class BankAccountInit {
-    private static Long randomNumber = 1111L;
+    private static Long randomNumber = 1115L;
 
     public static BankAccount initBankAccount(User user, BankAccountRequest bankAccountRequest) {
         BankAccount bankAccount = BankAccount.builder()

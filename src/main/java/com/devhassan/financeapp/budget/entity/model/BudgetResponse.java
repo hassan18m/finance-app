@@ -1,11 +1,11 @@
 package com.devhassan.financeapp.budget.entity.model;
 
-import com.devhassan.financeapp.expensecategory.entity.model.ExpenseCategoryResponseForBudget;
+import com.devhassan.financeapp.expensecategory.entity.model.ExpenseCategoryResponse;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -13,11 +13,12 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BudgetResponse {
     private Long id;
     private BigDecimal amount;
     private LocalDate startDate;
     private LocalDate endDate;
-    Set<ExpenseCategoryResponseForBudget> expenseCategories = new HashSet<>();
+    Set<ExpenseCategoryResponse> expenseCategories;
 }
 
