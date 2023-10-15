@@ -16,25 +16,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Set;
 
 @Service
 public class BankAccountServiceImpl implements BankAccountService {
 
     private final BankAccountRepository bankAccountRepository;
     private final TransactionRepository transactionRepository;
-    private final ExpenseCategoryRepository expenseCategoryRepository;
     private final FinancialInsightService financialInsightService;
+    private final ExpenseCategoryRepository expenseCategoryRepository;
 
     @Autowired
     public BankAccountServiceImpl(BankAccountRepository bankAccountRepository,
                                   TransactionRepository transactionRepository,
-                                  ExpenseCategoryRepository expenseCategoryRepository,
-                                  FinancialInsightService financialInsightService) {
+                                  FinancialInsightService financialInsightService,
+                                  ExpenseCategoryRepository expenseCategoryRepository) {
         this.bankAccountRepository = bankAccountRepository;
         this.transactionRepository = transactionRepository;
-        this.expenseCategoryRepository = expenseCategoryRepository;
         this.financialInsightService = financialInsightService;
+        this.expenseCategoryRepository = expenseCategoryRepository;
     }
 
     @Override
@@ -50,17 +49,16 @@ public class BankAccountServiceImpl implements BankAccountService {
         BankAccount foundBankAccount = bankAccountRepository.findById(bankAccountId)
                 .orElseThrow(() -> new NotFoundException("Bank account not found!"));
 
-        Set<Transaction> bankAccountTransactions = foundBankAccount.getTransactions();
         Transaction transaction = MapEntity.transactionRequestToEntity(transactionRequest);
-        bankAccountTransactions.add(transaction);
-        foundBankAccount.setTransactions(bankAccountTransactions);
+        transaction.setBankAccount(foundBankAccount);
 
-        double bankAccountBalance = foundBankAccount.getBalance().doubleValue();
+        boolean isExpenseTransaction = transaction.getTransactionType() == TransactionType.EXPENSE;
+        boolean isIncomeTransaction = transaction.getTransactionType() == TransactionType.INCOME;
         double transactionAmount = transaction.getAmount().doubleValue();
-        double remainingBalance;
+        double remainingBalance = foundBankAccount.getBalance().doubleValue();
 
-        if (transaction.getTransactionType() == TransactionType.EXPENSE) {
-            remainingBalance = bankAccountBalance - transactionAmount;
+        if (isExpenseTransaction) {
+            remainingBalance -= transactionAmount;
             if (remainingBalance < 0) {
                 throw new NegativeBalanceException();
             }
@@ -68,16 +66,16 @@ public class BankAccountServiceImpl implements BankAccountService {
             if (remainingBalance < 500) {
                 financialInsightService.generateInsight(foundBankAccount.getUser());
             }
-        } else {
-            remainingBalance = bankAccountBalance + transactionAmount;
+            if (transaction.getExpenseCategory() != null) {
+                expenseCategoryRepository.save(transaction.getExpenseCategory());
+            }
+        }
+
+        if (isIncomeTransaction) {
+            remainingBalance += transactionAmount;
             foundBankAccount.setBalance(BigDecimal.valueOf(remainingBalance));
         }
 
-        transaction.setBankAccount(foundBankAccount);
-
-        if (transaction.getTransactionType() == TransactionType.EXPENSE) {
-            expenseCategoryRepository.save(transaction.getExpenseCategory());
-        }
         transactionRepository.save(transaction);
         bankAccountRepository.save(foundBankAccount);
 

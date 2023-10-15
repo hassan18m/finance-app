@@ -75,14 +75,10 @@ public class UserServiceImpl implements UserService {
 
         BankAccount bankAccount = BankAccountInit.initBankAccount(foundUser, bankAccountRequest);
 
-        Set<BankAccount> bankAccountsOwnedByUser = foundUser.getBankAccounts();
-        bankAccountsOwnedByUser.add(bankAccount);
-        foundUser.setBankAccounts(bankAccountsOwnedByUser);
-
+        foundUser.getBankAccounts().add(bankAccount);
         bankAccount.setUser(foundUser);
         bankAccountRepository.save(bankAccount);
         userRepository.save(foundUser);
-
 
         return MapEntity.userEntityToResponse(foundUser);
     }
@@ -95,9 +91,7 @@ public class UserServiceImpl implements UserService {
         Budget budget = MapEntity.budgetRequestToEntity(budgetRequest);
         setExpenseCategoriesToBudget(budget, budgetRequest);
 
-        Set<Budget> userBudgets = foundUser.getBudgets();
-        userBudgets.add(budget);
-
+        foundUser.getBudgets().add(budget);
         budget.setUser(foundUser);
 
         budgetRepository.save(budget);

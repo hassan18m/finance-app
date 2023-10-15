@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 // TODO: 16-Oct-23 implement a better logic for FinancialInsight.
 @Service
@@ -35,17 +34,12 @@ public class FinancialInsightServiceImpl implements FinancialInsightService {
                     .mapToDouble(bankAccount -> bankAccount.getBalance().doubleValue())
                     .sum();
             if (totalBudgetOwnedByUser < 60.00) {
-                Set<FinancialInsight> financialInsightsOfUser = user.getFinancialInsights();
                 FinancialInsight financialInsight = new FinancialInsight();
                 financialInsight.setUser(user);
-                financialInsight.setInsightType("");
-
-
                 financialInsight.setInsightType("Your balance has fallen below 60.00 (" + totalBudgetOwnedByUser + ").");
 
-                financialInsightsOfUser.add(financialInsight);
                 financialInsightRepository.save(financialInsight);
-                user.setFinancialInsights(financialInsightsOfUser);
+                user.getFinancialInsights().add(financialInsight);
                 userRepository.save(user);
             }
         }

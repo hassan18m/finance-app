@@ -49,7 +49,6 @@ public class MapEntity {
     }
 
     public static BankAccountResponse bankAccountEntityToResponse(BankAccount bankAccount) {
-
         BankAccountResponse bankAccountResponse = new BankAccountResponse();
         bankAccountResponse.setId(bankAccount.getId());
         bankAccountResponse.setAccountNumber(bankAccount.getAccountNumber());
@@ -70,49 +69,47 @@ public class MapEntity {
     }
 
     public static TransactionResponse transactionEntityToResponse(Transaction transaction) {
-        if (transaction.getTransactionType() == TransactionType.EXPENSE) {
-            TransactionResponse transactionResponse = new TransactionResponse();
-            transactionResponse.setId(transaction.getId());
-            transactionResponse.setAmount(transaction.getAmount());
-            transactionResponse.setTransactionDateTime(transaction.getTransactionDateTime());
-            transactionResponse.setTransactionType(transaction.getTransactionType());
-            transactionResponse.setDescription(transaction.getDescription());
+        TransactionResponse transactionResponse = new TransactionResponse();
+        boolean isExpenseTransaction = transaction.getTransactionType() == TransactionType.EXPENSE;
+        boolean isIncomeTransaction = transaction.getTransactionType() == TransactionType.INCOME;
+
+        if (isIncomeTransaction) {
+            String recipient = transaction.getBankAccount().getUser().getFirstName() + " " +
+                    transaction.getBankAccount().getUser().getLastName();
+            transaction.setRecipient(recipient);
+        }
+
+        if (isExpenseTransaction) {
             transactionResponse.setExpenseCategory(MapEntity
                     .transactionExpenseCategoryEntityToResponse(transaction.getExpenseCategory()));
-            transactionResponse.setRecipient(transaction.getRecipient());
-            transactionResponse.setPaymentMethod(transaction.getPaymentMethod());
-            transactionResponse.setLocation(transaction.getLocation());
-
-            return transactionResponse;
         }
-        String bankAccountUserName = transaction.getBankAccount().getUser().getFirstName() + " " +
-                transaction.getBankAccount().getUser().getLastName();
 
-        return new TransactionResponse(
-                transaction.getId(),
-                transaction.getAmount(),
-                transaction.getTransactionDateTime(),
-                transaction.getTransactionType(),
-                transaction.getDescription(),
-                bankAccountUserName,
-                transaction.getPaymentMethod(),
-                transaction.getLocation()
-        );
+        transactionResponse.setId(transaction.getId());
+        transactionResponse.setAmount(transaction.getAmount());
+        transactionResponse.setTransactionDateTime(transaction.getTransactionDateTime());
+        transactionResponse.setTransactionType(transaction.getTransactionType());
+        transactionResponse.setDescription(transaction.getDescription());
+        transactionResponse.setRecipient(transaction.getRecipient());
+        transactionResponse.setPaymentMethod(transaction.getPaymentMethod());
+        transactionResponse.setLocation(transaction.getLocation());
+
+        return transactionResponse;
     }
 
     public static Transaction transactionRequestToEntity(TransactionRequest transactionRequest) {
         Transaction transaction = new Transaction();
+        boolean isExpenseTransaction = transactionRequest.getTransactionType() == TransactionType.EXPENSE;
 
         ExpenseCategory expenseCategory = new ExpenseCategory();
         expenseCategory.setCategoryName(transactionRequest.getCategoryName());
+        if (isExpenseTransaction) {
+            transaction.setExpenseCategory(expenseCategory);
+        }
 
         transaction.setAmount(transactionRequest.getAmount());
         transaction.setTransactionDateTime(LocalDateTime.now());
         transaction.setTransactionType(transactionRequest.getTransactionType());
         transaction.setDescription(transactionRequest.getDescription());
-        if (transactionRequest.getTransactionType() == TransactionType.EXPENSE) {
-            transaction.setExpenseCategory(expenseCategory);
-        }
         transaction.setRecipient(transactionRequest.getRecipient());
         transaction.setPaymentMethod(transactionRequest.getPaymentMethod());
         transaction.setLocation(transactionRequest.getLocation());

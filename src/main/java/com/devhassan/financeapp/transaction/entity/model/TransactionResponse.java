@@ -20,24 +20,11 @@ public class TransactionResponse {
     private LocalDateTime transactionDateTime;
     private TransactionType transactionType;
     private String description;
-    //For income transactions
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private ExpenseCategoryResponse expenseCategory;
 
     private String recipient;
     private PaymentMethod paymentMethod;
     private String location;
-
-    public TransactionResponse(Long id, BigDecimal amount, LocalDateTime transactionDateTime,
-                               TransactionType transactionType, String description,
-                               String recipient, PaymentMethod paymentMethod, String location) {
-        this.id = id;
-        this.amount = amount;
-        this.transactionDateTime = transactionDateTime;
-        this.transactionType = transactionType;
-        this.description = description;
-        this.recipient = recipient;
-        this.paymentMethod = paymentMethod;
-        this.location = location;
-    }
 }
