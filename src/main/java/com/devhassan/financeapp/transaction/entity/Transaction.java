@@ -56,19 +56,6 @@ public class Transaction {
     @JsonIgnore
     private BankAccount bankAccount;
 
-    public Transaction(BigDecimal amount,
-                       LocalDateTime transactionDateTime, TransactionType transactionType,
-                       String description, String recipient, PaymentMethod paymentMethod,
-                       String location) {
-        this.amount = amount;
-        this.transactionDateTime = transactionDateTime;
-        this.transactionType = transactionType;
-        this.description = description;
-        this.recipient = recipient;
-        this.paymentMethod = paymentMethod;
-        this.location = location;
-    }
-
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;

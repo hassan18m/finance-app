@@ -1,6 +1,8 @@
 package com.devhassan.financeapp.bankaccount.controller;
 
 import com.devhassan.financeapp.bankaccount.service.BankAccountService;
+import com.devhassan.financeapp.exceptions.NegativeBalanceException;
+import com.devhassan.financeapp.transaction.entity.enums.TransactionType;
 import com.devhassan.financeapp.transaction.entity.model.TransactionRequest;
 import com.devhassan.financeapp.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -28,16 +30,20 @@ public class BankAccountController {
     @PostMapping("{bankAccountId}/transactions/expense")
     public ResponseEntity<?> addExpenseTransactionToBankAccount(@PathVariable Long bankAccountId, @RequestBody TransactionRequest transactionRequest) {
         try {
-            return ResponseEntity.ok(bankAccountService.addExpenseTransactionToBankAccount(bankAccountId, transactionRequest));
+            transactionRequest.setTransactionType(TransactionType.EXPENSE);
+            return ResponseEntity.ok(bankAccountService.addTransactionToBankAccount(bankAccountId, transactionRequest));
         } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (NegativeBalanceException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("{bankAccountId}/transactions/income")
     public ResponseEntity<?> addIncomeTransactionToBankAccount(@PathVariable Long bankAccountId, @RequestBody TransactionRequest transactionRequest) {
         try {
-            return ResponseEntity.ok(bankAccountService.addIncomeTransactionToBankAccount(bankAccountId, transactionRequest));
+            transactionRequest.setTransactionType(TransactionType.INCOME);
+            return ResponseEntity.ok(bankAccountService.addTransactionToBankAccount(bankAccountId, transactionRequest));
         } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }

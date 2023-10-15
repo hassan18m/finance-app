@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 
+// TODO: 16-17-Oct-23 - implement a better logic for BankAccountInit.
 public class BankAccountInit {
     private static Long randomNumber = 1115L;
 

@@ -85,6 +85,8 @@ public class MapEntity {
 
             return transactionResponse;
         }
+        String bankAccountUserName = transaction.getBankAccount().getUser().getFirstName() + " " +
+                transaction.getBankAccount().getUser().getLastName();
 
         return new TransactionResponse(
                 transaction.getId(),
@@ -92,39 +94,30 @@ public class MapEntity {
                 transaction.getTransactionDateTime(),
                 transaction.getTransactionType(),
                 transaction.getDescription(),
-                transaction.getRecipient(),
+                bankAccountUserName,
                 transaction.getPaymentMethod(),
                 transaction.getLocation()
         );
     }
 
-    public static Transaction expenseTransactionRequestToEntity(TransactionRequest transactionRequest) {
+    public static Transaction transactionRequestToEntity(TransactionRequest transactionRequest) {
         Transaction transaction = new Transaction();
+
         ExpenseCategory expenseCategory = new ExpenseCategory();
         expenseCategory.setCategoryName(transactionRequest.getCategoryName());
 
         transaction.setAmount(transactionRequest.getAmount());
         transaction.setTransactionDateTime(LocalDateTime.now());
-        transaction.setTransactionType(TransactionType.EXPENSE);
+        transaction.setTransactionType(transactionRequest.getTransactionType());
         transaction.setDescription(transactionRequest.getDescription());
-        transaction.setExpenseCategory(expenseCategory);
+        if (transactionRequest.getTransactionType() == TransactionType.EXPENSE) {
+            transaction.setExpenseCategory(expenseCategory);
+        }
         transaction.setRecipient(transactionRequest.getRecipient());
         transaction.setPaymentMethod(transactionRequest.getPaymentMethod());
         transaction.setLocation(transactionRequest.getLocation());
 
         return transaction;
-    }
-
-    public static Transaction incomeTransactionRequestToEntity(TransactionRequest transactionRequest) {
-        return new Transaction(
-                transactionRequest.getAmount(),
-                LocalDateTime.now(),
-                TransactionType.INCOME,
-                transactionRequest.getDescription(),
-                transactionRequest.getRecipient(),
-                transactionRequest.getPaymentMethod(),
-                transactionRequest.getLocation()
-        );
     }
 
     public static Budget budgetRequestToEntity(BudgetRequest budgetRequest) {
@@ -150,6 +143,7 @@ public class MapEntity {
         return budgetResponse;
     }
 
+    // ExpenseCategory response for transaction entity
     private static ExpenseCategoryResponse transactionExpenseCategoryEntityToResponse(ExpenseCategory expenseCategory) {
         ExpenseCategoryResponse expenseCategoryResponse = new ExpenseCategoryResponse();
         expenseCategoryResponse.setCategoryName(expenseCategory.getCategoryName());
@@ -167,6 +161,7 @@ public class MapEntity {
         return expenseCategoryResponse;
     }
 
+    // ExpenseCategory response for budget entity
     private static ExpenseCategoryResponse budgetExpenseCategoryEntityToResponse(ExpenseCategory expenseCategory) {
         ExpenseCategoryResponse expenseCategoryResponse = new ExpenseCategoryResponse();
         expenseCategoryResponse.setCategoryName(expenseCategory.getCategoryName());

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Set;
 
-
+// TODO: 16-Oct-23 implement a better logic for FinancialInsight.
 @Service
 public class FinancialInsightServiceImpl implements FinancialInsightService {
     private final FinancialInsightRepository financialInsightRepository;
@@ -28,6 +28,7 @@ public class FinancialInsightServiceImpl implements FinancialInsightService {
         List<BankAccount> bankAccountsOwnedByUser = user.getBankAccounts()
                 .stream()
                 .toList();
+
         if (!bankAccountsOwnedByUser.isEmpty()) {
             double totalBudgetOwnedByUser = bankAccountsOwnedByUser
                     .stream()
