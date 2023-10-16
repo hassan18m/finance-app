@@ -50,10 +50,10 @@ public class UserController {
         }
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<?> addBankAccountToUser(@PathVariable UUID id, @RequestBody BankAccountRequest bankAccountRequest) {
+    @PostMapping("{userId}/add-bank-account")
+    public ResponseEntity<?> addBankAccountToUser(@PathVariable UUID userId, @RequestBody BankAccountRequest bankAccountRequest) {
         try {
-            return ResponseEntity.ok(userService.addBankAccount(id, bankAccountRequest));
+            return ResponseEntity.ok(userService.addBankAccount(userId, bankAccountRequest));
         } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
