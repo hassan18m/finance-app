@@ -5,9 +5,12 @@ import com.devhassan.financeapp.budget.entity.model.BudgetRequest;
 import com.devhassan.financeapp.user.entity.model.UserRequest;
 import com.devhassan.financeapp.user.entity.model.UserResponse;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
+    List<UserResponse> findAllUsers();
+
     UserResponse insertUser(UserRequest userRequest);
 
     UserResponse findByEmail(String email);

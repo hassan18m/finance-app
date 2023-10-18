@@ -43,6 +43,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserResponse> findAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(MapEntity::userEntityToResponse)
+                .toList();
+    }
+
+    @Override
     public UserResponse insertUser(UserRequest userRequest) {
         if (userRepository.findByEmail(userRequest.getEmail()).isPresent()) {
             throw new DuplicateDataException("Email already used!");

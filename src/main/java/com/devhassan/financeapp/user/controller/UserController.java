@@ -5,16 +5,18 @@ import com.devhassan.financeapp.budget.entity.model.BudgetRequest;
 import com.devhassan.financeapp.user.entity.model.UserRequest;
 import com.devhassan.financeapp.exceptions.DuplicateDataException;
 import com.devhassan.financeapp.exceptions.NotFoundException;
+import com.devhassan.financeapp.user.entity.model.UserResponse;
 import com.devhassan.financeapp.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/users")
 public class UserController {
     private final UserService userService;
 
@@ -24,7 +26,12 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> findByEmail(@RequestParam String email) {
+    public ResponseEntity<List<UserResponse>> findAllUsers() {
+        return ResponseEntity.ok(userService.findAllUsers());
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<?> findByEmail(@PathVariable String email) {
         try {
             return ResponseEntity.ok(userService.findByEmail(email));
         } catch (NotFoundException e) {
