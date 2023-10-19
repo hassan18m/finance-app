@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthContentComponent } from './auth-content/auth-content.component';
+import { UsersListComponent } from './users-list/users-list.component';
 
 const routes: Routes = [
-  { path: 'auth', component: AuthContentComponent }
+  { path: 'users', component: UsersListComponent },
 ];
 
 @NgModule({
