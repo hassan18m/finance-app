@@ -74,4 +74,9 @@ public class UserController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
+    @PostMapping("/populate")
+    public ResponseEntity<List<UserResponse>> populateWithUsers() {
+        return ResponseEntity.ok(userService.populateWithUsers());
+    }
 }

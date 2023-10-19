@@ -19,10 +19,7 @@ import com.devhassan.financeapp.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -106,6 +103,27 @@ public class UserServiceImpl implements UserService {
         userRepository.save(foundUser);
 
         return MapEntity.userEntityToResponse(foundUser);
+    }
+
+    @Override
+    public List<UserResponse> populateWithUsers() {
+        List<User> usersList = new ArrayList<>();
+
+        for (int i = 1; i <= 20; i++) {
+            User user = new User();
+            user.setFirstName("testFirstName_" + i);
+            user.setLastName("testLastName_" + i);
+            user.setEmail("testEmail_" + i + "@test_" + i + ".com");
+            user.setPassword("password_" + i);
+
+            userRepository.save(user);
+            usersList.add(user);
+        }
+
+        return usersList
+                .stream()
+                .map(MapEntity::userEntityToResponse)
+                .toList();
     }
 
     private void setExpenseCategoriesToBudget(Budget budget, BudgetRequest budgetRequest) {

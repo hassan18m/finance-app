@@ -20,4 +20,6 @@ public interface UserService {
     UserResponse addBankAccount(UUID userId, BankAccountRequest bankAccountRequest);
 
     UserResponse setBudget(UUID userId, BudgetRequest budgetRequest);
+
+    List<UserResponse> populateWithUsers();
 }
