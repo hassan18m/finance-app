@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UsersListComponent } from './users-list/users-list.component';
+import { AppComponent } from './app.component';
+import { UserlistComponent } from './components/userlist/userlist.component';
+import { BankAccountListComponent } from './components/bank-account-list/bank-account-list.component';
 
 const routes: Routes = [
-  { path: 'users', component: UsersListComponent },
+  { path: 'users', component: UserlistComponent },
+  { path: 'bank-accounts', component: BankAccountListComponent}
 ];
 
 @NgModule({

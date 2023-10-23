@@ -1,5 +1,5 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../types/user';
 
@@ -8,13 +8,12 @@ import { User } from '../types/user';
 })
 export class UserService {
 
-  private usersUrl: string;
+  private url: string = 'http://localhost:8080/api/v1/users';
+  users!: User[];
 
-  constructor(private http: HttpClient) { 
-    this.usersUrl = "http://localhost:8080/api/v1/users";
-  }
+  constructor(private http: HttpClient) { }
 
-  public findAll(): Observable<User[]> {
-    return this.http.get<User[]>(this.usersUrl);
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.url);
   }
 }
