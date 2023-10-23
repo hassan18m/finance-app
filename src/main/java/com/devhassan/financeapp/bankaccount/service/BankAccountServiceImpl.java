@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class BankAccountServiceImpl implements BankAccountService {
@@ -41,6 +42,14 @@ public class BankAccountServiceImpl implements BankAccountService {
         return bankAccountRepository.findByAccountNumber(accountNumber)
                 .map(MapEntity::bankAccountEntityToResponse)
                 .orElseThrow(() -> new NotFoundException("Account with number: " + accountNumber + " not found!"));
+    }
+
+    @Override
+    public List<BankAccountResponse> getAllBankAccounts() {
+        return bankAccountRepository.findAll()
+                .stream()
+                .map(MapEntity::bankAccountEntityToResponse)
+                .toList();
     }
 
     // TODO: 16-Oct-23 code cleaning.

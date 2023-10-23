@@ -3,6 +3,7 @@ package com.devhassan.financeapp.authentication.service;
 import com.devhassan.financeapp.authentication.model.RegisterRequest;
 import com.devhassan.financeapp.authentication.model.AuthenticationRequest;
 import com.devhassan.financeapp.authentication.model.AuthenticationResponse;
+import com.devhassan.financeapp.exceptions.DuplicateDataException;
 import com.devhassan.financeapp.securityconfig.JwtService;
 import com.devhassan.financeapp.exceptions.NotFoundException;
 import com.devhassan.financeapp.user.entity.Role;
@@ -23,6 +24,10 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest registerRequest) {
+        if (userRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
+            throw new DuplicateDataException("Email already used!");
+        }
+
         var user = User.builder()
                 .firstName(registerRequest.getFirstName())
                 .lastName(registerRequest.getLastName())

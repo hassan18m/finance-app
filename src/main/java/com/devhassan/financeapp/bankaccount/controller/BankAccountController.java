@@ -1,5 +1,6 @@
 package com.devhassan.financeapp.bankaccount.controller;
 
+import com.devhassan.financeapp.bankaccount.entity.model.BankAccountResponse;
 import com.devhassan.financeapp.bankaccount.service.BankAccountService;
 import com.devhassan.financeapp.exceptions.NegativeBalanceException;
 import com.devhassan.financeapp.transaction.entity.enums.TransactionType;
@@ -9,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/bank-accounts")
 public class BankAccountController {
@@ -16,6 +19,11 @@ public class BankAccountController {
 
     public BankAccountController(BankAccountService bankAccountService) {
         this.bankAccountService = bankAccountService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<BankAccountResponse>> getAllBankAccounts() {
+        return ResponseEntity.ok(bankAccountService.getAllBankAccounts());
     }
 
     @GetMapping("/{accountNumber}")
