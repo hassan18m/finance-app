@@ -11,16 +11,20 @@ import { UserAuth } from 'src/app/types/user-auth';
 })
 export class LoginComponent {
 
-  userLogin!: UserAuth;
+  userLogin: UserAuth = {
+    email: '',
+    password: ''
+  };
 
   constructor(private loginService: LoginService,
     private router: Router) { }
 
   onLogin() {
+    debugger;
     this.loginService.loginUser(this.userLogin).subscribe({
       next: data => {
-        console.log(data)
         this.router.navigate(['/']).then(() => window.location.reload());
+        localStorage.setItem('loginToken', data.token);
       }
       ,
       error: err => console.log(err)

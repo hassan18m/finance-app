@@ -5,6 +5,7 @@ import com.devhassan.financeapp.authentication.model.AuthenticationResponse;
 import com.devhassan.financeapp.authentication.service.AuthenticationService;
 import com.devhassan.financeapp.authentication.model.RegisterRequest;
 import com.devhassan.financeapp.exceptions.DuplicateDataException;
+import com.devhassan.financeapp.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,11 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authRequest) {
-        return ResponseEntity.ok(authenticationService.authenticate(authRequest));
+    public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authRequest) {
+        try {
+            return ResponseEntity.ok(authenticationService.authenticate(authRequest));
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }
