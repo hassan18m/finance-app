@@ -3,10 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { UserlistComponent } from './components/userlist/userlist.component';
 import { BankAccountListComponent } from './components/bank-account-list/bank-account-list.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
+  { path: 'login', component: LoginComponent },
   { path: 'users', component: UserlistComponent },
-  { path: 'bank-accounts', component: BankAccountListComponent}
+  { path: 'bank-accounts', component: BankAccountListComponent }
 ];
 
 @NgModule({

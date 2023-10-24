@@ -1,0 +1,31 @@
+import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent {
+
+  loginObj: any = {
+    "email": "",
+    "password": ""
+  }
+
+  constructor(private loginService: LoginService,
+    private router: Router) { }
+
+  onLogin() {
+    this.loginService.loginUser(this.loginObj).subscribe({
+      next: data => {
+        console.log(data)
+        this.router.navigate(['/']).then(() => window.location.reload());
+      }
+      ,
+      error: err => console.log(err)
+    });
+  }
+}
