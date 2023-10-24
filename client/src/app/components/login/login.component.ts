@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
+import { UserAuth } from 'src/app/types/user-auth';
 
 @Component({
   selector: 'app-login',
@@ -10,16 +11,13 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class LoginComponent {
 
-  loginObj: any = {
-    "email": "",
-    "password": ""
-  }
+  userLogin!: UserAuth;
 
   constructor(private loginService: LoginService,
     private router: Router) { }
 
   onLogin() {
-    this.loginService.loginUser(this.loginObj).subscribe({
+    this.loginService.loginUser(this.userLogin).subscribe({
       next: data => {
         console.log(data)
         this.router.navigate(['/']).then(() => window.location.reload());
