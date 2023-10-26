@@ -1,6 +1,6 @@
 package com.devhassan.financeapp.securityconfig;
 
-import com.devhassan.financeapp.user.service.UserDetailsServiceImpl;
+import com.devhassan.financeapp.securityconfig.service.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

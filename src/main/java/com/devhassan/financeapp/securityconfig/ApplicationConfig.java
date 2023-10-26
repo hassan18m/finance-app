@@ -1,6 +1,6 @@
 package com.devhassan.financeapp.securityconfig;
 
-import com.devhassan.financeapp.user.service.UserDetailsServiceImpl;
+import com.devhassan.financeapp.securityconfig.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

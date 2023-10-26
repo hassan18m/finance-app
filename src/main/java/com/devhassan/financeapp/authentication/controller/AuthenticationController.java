@@ -5,11 +5,12 @@ import com.devhassan.financeapp.authentication.model.request.SignupRequest;
 import com.devhassan.financeapp.authentication.model.response.MessageResponse;
 import com.devhassan.financeapp.authentication.model.response.UserInfoResponse;
 import com.devhassan.financeapp.securityconfig.JwtUtils;
-import com.devhassan.financeapp.user.entity.ERole;
+import com.devhassan.financeapp.user.entity.enums.ERole;
 import com.devhassan.financeapp.user.entity.Role;
 import com.devhassan.financeapp.user.entity.User;
 import com.devhassan.financeapp.user.repository.RoleRepository;
 import com.devhassan.financeapp.user.repository.UserRepository;
+import com.devhassan.financeapp.securityconfig.service.UserDetailsImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -57,7 +58,7 @@ public class AuthenticationController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        User userDetails = (User) authentication.getPrincipal();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
         ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
 

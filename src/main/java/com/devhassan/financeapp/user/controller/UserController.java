@@ -10,6 +10,7 @@ import com.devhassan.financeapp.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,6 +50,7 @@ public class UserController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> insertUser(@RequestBody UserRequest userRequest) {
         try {
             return ResponseEntity.ok(userService.insertUser(userRequest));
@@ -58,6 +60,7 @@ public class UserController {
     }
 
     @PostMapping("{userId}/add-bank-account")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<?> addBankAccountToUser(@PathVariable UUID userId, @RequestBody BankAccountRequest bankAccountRequest) {
         try {
             return ResponseEntity.ok(userService.addBankAccount(userId, bankAccountRequest));

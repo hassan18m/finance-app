@@ -1,5 +1,6 @@
 package com.devhassan.financeapp.user.entity;
 
+import com.devhassan.financeapp.user.entity.enums.ERole;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

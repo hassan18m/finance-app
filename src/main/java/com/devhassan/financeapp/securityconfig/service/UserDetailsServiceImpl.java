@@ -1,5 +1,7 @@
-package com.devhassan.financeapp.user.service;
+package com.devhassan.financeapp.securityconfig.service;
 
+import com.devhassan.financeapp.securityconfig.service.UserDetailsImpl;
+import com.devhassan.financeapp.user.entity.User;
 import com.devhassan.financeapp.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +18,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username)
+        User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+
+        return UserDetailsImpl.build(user);
     }
 }
