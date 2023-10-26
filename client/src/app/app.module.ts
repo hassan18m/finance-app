@@ -10,20 +10,32 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { UserlistComponent } from './components/userlist/userlist.component';
+//import { UserlistComponent } from './components/userlist/userlist.component';
 import { MatTableModule } from '@angular/material/table';
 import { BankAccountListComponent } from './components/bank-account-list/bank-account-list.component';
 import { LoginComponent } from './components/login/login.component';
-import { CustomeInterceptor } from './services/custome.interceptor';
+import { RegisterComponent } from './components/register/register.component';
+import { HomeComponent } from './components/home/home.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { BoardAdminComponent } from './components/board-admin/board-admin.component';
+import { BoardModeratorComponent } from './components/board-moderator/board-moderator.component';
+import { BoardUserComponent } from './components/board-user/board-user.component';
+import { httpInterceptorProviders } from './helpers/http.interceptor';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserlistComponent,
+    //UserlistComponent,
     BankAccountListComponent,
     LoginComponent,
+    RegisterComponent,
+    HomeComponent,
+    ProfileComponent,
+    BoardAdminComponent,
+    BoardModeratorComponent,
+    BoardUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,13 +50,7 @@ import { CustomeInterceptor } from './services/custome.interceptor';
     MatButtonModule,
     MatTableModule,
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: CustomeInterceptor,
-      multi: true
-    }
-  ],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

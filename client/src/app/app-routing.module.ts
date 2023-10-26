@@ -1,14 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-import { UserlistComponent } from './components/userlist/userlist.component';
+//import { UserlistComponent } from './components/userlist/userlist.component';
 import { BankAccountListComponent } from './components/bank-account-list/bank-account-list.component';
+import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { BoardUserComponent } from './components/board-user/board-user.component';
+import { BoardModeratorComponent } from './components/board-moderator/board-moderator.component';
+import { BoardAdminComponent } from './components/board-admin/board-admin.component';
 
 const routes: Routes = [
+  { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'users', component: UserlistComponent },
-  { path: 'bank-accounts', component: BankAccountListComponent }
+  { path: 'register', component: RegisterComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'user', component: BoardUserComponent },
+  { path: 'mod', component: BoardModeratorComponent },
+  { path: 'admin', component: BoardAdminComponent },
+  { path: 'bank-accounts', component: BankAccountListComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
 @NgModule({
