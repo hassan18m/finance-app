@@ -14,8 +14,9 @@ export class AppComponent implements OnInit {
   showAdminBoard = false;
   showModeratorBoard = false;
   username?: string;
+  eventBusService: any;
 
-  constructor(private storageService: StorageService, private authService: AuthService) { }
+  constructor(private storageService: StorageService, private authService: AuthService,private router: Router) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.storageService.isLoggedIn();
@@ -36,14 +37,16 @@ export class AppComponent implements OnInit {
   logout(): void {
     this.authService.logout().subscribe({
       next: res => {
-        console.log(this.storageService.getUser());
-        this.storageService.clean();
-
-        window.location.reload();
+        console.log(res);
       },
       error: err => {
         console.log(err);
       }
     });
+    this.storageService.clear();
+    this.router.navigateByUrl('/home');
+    window.location.reload();
   }
+
+
 }

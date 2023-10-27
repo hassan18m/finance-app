@@ -20,7 +20,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { BoardAdminComponent } from './components/board-admin/board-admin.component';
 import { BoardModeratorComponent } from './components/board-moderator/board-moderator.component';
 import { BoardUserComponent } from './components/board-user/board-user.component';
-import { httpInterceptorProviders } from './helpers/http.interceptor';
+//import { httpInterceptorProviders } from './helpers/http.interceptor';
 
 
 
@@ -50,7 +50,8 @@ import { httpInterceptorProviders } from './helpers/http.interceptor';
     MatButtonModule,
     MatTableModule,
   ],
-  providers: [httpInterceptorProviders],
+  providers: [//httpInterceptorProviders
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

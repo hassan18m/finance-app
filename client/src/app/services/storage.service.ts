@@ -8,30 +8,24 @@ const USER_KEY = 'auth-user';
 export class StorageService {
   constructor() { }
 
-  clean(): void {
-    window.sessionStorage.clear();
+  clear(): void {
+    window.localStorage.clear();
   }
 
-  public saveUser(user: any): void {
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+  saveUser(user: any): void {
+    window.localStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 
-  public getUser(): any {
-    const user = window.sessionStorage.getItem(USER_KEY);
-    if (user) {
-      return JSON.parse(user);
-    }
-
-    return {};
+  getUser(): any {
+    const user = window.localStorage.getItem(USER_KEY);
+    return user ? JSON.parse(user) : null;
   }
 
-  public isLoggedIn(): boolean {
-    const user = window.sessionStorage.getItem(USER_KEY);
-    if (user) {
-      return true;
-    }
+  removeUser(): void {
+    window.localStorage.removeItem(USER_KEY);
+  }
 
-    return false;
+  isLoggedIn(): boolean {
+    return !!this.getUser();
   }
 }

@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserLoginRequest } from '../types/user-login';
-import { Observable } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 import { UserRegisterRequest } from '../types/user-register-req';
+import { StorageService } from './storage.service';
 
 const AUTH_API = 'http://localhost:8080/api/v1/auth/';
 
@@ -15,11 +16,11 @@ const httpOptions = {
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storageService: StorageService) { }
 
   login(userLogin: UserLoginRequest): Observable<any> {
     const loginUrl = AUTH_API + 'signin';
-    return this.http.post(loginUrl, userLogin, httpOptions);
+    return this.http.post(loginUrl, userLogin, { withCredentials: true });
   }
 
   register(userRegister: UserRegisterRequest): Observable<any> {
@@ -29,6 +30,6 @@ export class AuthService {
 
   logout(): Observable<any> {
     const logoutUrl = AUTH_API + 'signout';
-    return this.http.post(logoutUrl, {}, httpOptions);
+    return this.http.post(logoutUrl, null, { withCredentials: true });
   }
 }
