@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { UserDetails } from '../types/user-details';
 
 const USER_KEY = 'auth-user';
 
@@ -17,7 +18,7 @@ export class StorageService {
     window.localStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 
-  getUser(): any {
+  getUser(): UserDetails {
     const user = window.localStorage.getItem(USER_KEY);
     return user ? JSON.parse(user) : null;
   }
