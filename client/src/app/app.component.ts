@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   username?: string;
   eventBusService: any;
 
-  constructor(private storageService: StorageService, private authService: AuthService,private router: Router) { }
+  constructor(private storageService: StorageService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.storageService.isLoggedIn();
@@ -43,10 +43,11 @@ export class AppComponent implements OnInit {
         console.log(err);
       }
     });
-    this.storageService.clear();
-    this.router.navigateByUrl('/home');
-    window.location.reload();
+    this.clearDataAndNavigateToHome();
   }
 
-
+  clearDataAndNavigateToHome(): void {
+    this.storageService.clear();
+    this.router.navigate(['/']).then(() => this.storageService.clear()).then(() => window.location.reload());
+  }
 }

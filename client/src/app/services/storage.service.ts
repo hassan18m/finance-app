@@ -9,6 +9,7 @@ export class StorageService {
   constructor() { }
 
   clear(): void {
+    window.sessionStorage.clear();
     window.localStorage.clear();
   }
 
