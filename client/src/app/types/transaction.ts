@@ -1,4 +1,4 @@
-import { ExpenseCategory } from "./expense-category";
+import { TransactionExpenseCategory } from "./transaction-expense-category";
 
 export class Transaction {
     constructor(public id: number,
@@ -6,7 +6,7 @@ export class Transaction {
         public transactionDateTime: Date,
         public transactionType: string,
         public description: string,
-        public expenseCategory: ExpenseCategory,
+        public expenseCategory: TransactionExpenseCategory,
         public recipient: string,
         public paymentMethod: string,
         public location: string) { }

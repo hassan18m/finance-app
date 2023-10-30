@@ -1,9 +1,9 @@
-import { ExpenseCategory } from "./expense-category"
+import { BudgetExpenseCategory } from "./budget-expense-category"
 
 export class Budget {
-    constructor(private id: number,
-        private amount: number,
-        private startDate: Date,
-        private endDate: Date,
-        expenseCategories: ExpenseCategory[]) { }
+    constructor(public id: number,
+        public amount: number,
+        public startDate: Date,
+        public endDate: Date,
+        public expenseCategories: BudgetExpenseCategory[]) { }
 }
