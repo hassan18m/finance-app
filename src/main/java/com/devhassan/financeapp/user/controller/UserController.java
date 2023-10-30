@@ -40,7 +40,17 @@ public class UserController {
         }
     }
 
+    @GetMapping("{userId}/totalBalance")
+    public ResponseEntity<?> getUserTotalBudget(@PathVariable UUID userId) {
+        try {
+            return ResponseEntity.ok(userService.getTotalBalance(userId));
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<?> findById(@PathVariable UUID id) {
         try {
             return ResponseEntity.ok(userService.findById(id));
@@ -60,7 +70,6 @@ public class UserController {
     }
 
     @PostMapping("{userId}/add-bank-account")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<?> addBankAccountToUser(@PathVariable UUID userId, @RequestBody BankAccountRequest bankAccountRequest) {
         try {
             return ResponseEntity.ok(userService.addBankAccount(userId, bankAccountRequest));

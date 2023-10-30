@@ -19,6 +19,7 @@ import com.devhassan.financeapp.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -71,6 +72,24 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id)
                 .map(MapEntity::userEntityToResponse)
                 .orElseThrow(NotFoundException::new);
+    }
+
+    @Override
+    public BigDecimal getTotalBalance(UUID userId) {
+        User foundUser = userRepository.findById(userId)
+                .orElseThrow(NotFoundException::new);
+
+        List<BankAccount> userBankAccounts = foundUser.getBankAccounts().stream().toList();
+
+        double totalBalance = userBankAccounts
+                .stream()
+                .mapToDouble(bankAccount -> {
+                    double bankAccountBalance = bankAccount.getBalance().doubleValue();
+                    return convertToRon(bankAccountBalance, bankAccount.getCurrency());
+                })
+                .sum();
+
+        return BigDecimal.valueOf(totalBalance);
     }
 
     @Override
@@ -137,5 +156,13 @@ public class UserServiceImpl implements UserService {
         }));
 
         budget.setExpenseCategories(expenseCategoriesForBudget);
+    }
+
+    private double convertToRon(double value, String currency) {
+        return switch (currency) {
+            case "USD" -> value * 4;
+            case "EUR" -> value * 5;
+            default -> value;
+        };
     }
 }
