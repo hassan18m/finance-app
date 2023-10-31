@@ -2,7 +2,6 @@ package com.devhassan.financeapp.user.service;
 
 import com.devhassan.financeapp.bankaccount.entity.model.BankAccountRequest;
 import com.devhassan.financeapp.budget.entity.model.BudgetRequest;
-import com.devhassan.financeapp.budget.entity.model.BudgetResponse;
 import com.devhassan.financeapp.user.entity.model.UserRequest;
 import com.devhassan.financeapp.user.entity.model.UserResponse;
 

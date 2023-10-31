@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
         User foundUser = userRepository.findById(userId)
                 .orElseThrow(NotFoundException::new);
 
-        BankAccount bankAccount = BankAccountInit.initBankAccount(foundUser, bankAccountRequest);
+        BankAccount bankAccount = BankAccountInit.initBankAccount(foundUser, bankAccountRequest, getAccountNumbers());
 
         foundUser.getBankAccounts().add(bankAccount);
         bankAccount.setUser(foundUser);
@@ -164,5 +164,12 @@ public class UserServiceImpl implements UserService {
             case "EUR" -> value * 5;
             default -> value;
         };
+    }
+
+    private List<String> getAccountNumbers() {
+        return bankAccountRepository.findAll()
+                .stream()
+                .map(BankAccount::getAccountNumber)
+                .toList();
     }
 }

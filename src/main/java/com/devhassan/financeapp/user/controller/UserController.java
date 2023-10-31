@@ -50,7 +50,6 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<?> findById(@PathVariable UUID id) {
         try {
             return ResponseEntity.ok(userService.findById(id));

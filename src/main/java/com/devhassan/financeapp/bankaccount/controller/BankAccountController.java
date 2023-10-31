@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/bank-accounts")
@@ -35,6 +36,15 @@ public class BankAccountController {
         }
     }
 
+    @GetMapping("user/{userId}")
+    public ResponseEntity<?> getUserBankAccounts(@PathVariable UUID userId) {
+        try {
+            return ResponseEntity.ok(bankAccountService.getUserBankAccounts(userId));
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("{bankAccountId}/transactions/expense")
     public ResponseEntity<?> addExpenseTransactionToBankAccount(@PathVariable Long bankAccountId, @RequestBody TransactionRequest transactionRequest) {
         try {
@@ -52,6 +62,26 @@ public class BankAccountController {
         try {
             transactionRequest.setTransactionType(TransactionType.INCOME);
             return ResponseEntity.ok(bankAccountService.addTransactionToBankAccount(bankAccountId, transactionRequest));
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/{bankAccountId}")
+    public ResponseEntity<?> removeBankAccount(@PathVariable Long bankAccountId) {
+        try {
+            bankAccountService.removeBankAccount(bankAccountId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/{userId}/delete-all")
+    public ResponseEntity<?> deleteAllBankAccountsFromUser(@PathVariable UUID userId) {
+        try {
+            bankAccountService.deleteBankAccountsFromUser(userId);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }

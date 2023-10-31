@@ -58,7 +58,8 @@ public class BankAccount {
     @JsonIgnore
     private User user;
 
-    @OneToMany(mappedBy = "bankAccount")
+    @OneToMany(mappedBy = "bankAccount",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ToString.Exclude
     private Set<Transaction> transactions;
 
     @Override
