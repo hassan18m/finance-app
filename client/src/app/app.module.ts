@@ -22,6 +22,16 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { TestSplitScreenComponent } from './components/test-split-screen/test-split-screen.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AddBankAccountComponent } from './components/dialogs/add-bankaccount/add-bankaccount.component';
+import { MatSelectModule } from '@angular/material/select';
+import { UpdateBankaccountComponent } from './components/dialogs/update-bankaccount/update-bankaccount.component';
+import { RemoveBankaccountComponent } from './components/dialogs/remove-bankaccount/remove-bankaccount.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackbarComponent } from './components/dialogs/add-bankaccount/snackbar/snackbar.component';
 
 
 
@@ -35,6 +45,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
     BoardAdminComponent,
     BoardModeratorComponent,
     BoardUserComponent,
+    TestSplitScreenComponent,
+    AddBankAccountComponent,
+    UpdateBankaccountComponent,
+    RemoveBankaccountComponent,
+    SnackbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +66,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatGridListModule,
+    MatCardModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

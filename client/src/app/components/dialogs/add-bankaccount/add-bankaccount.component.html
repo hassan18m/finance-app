@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>New Bank Account</h2>
+<mat-dialog-content class="mat-typography">
+    <mat-form-field>
+        <mat-label>Bank Name</mat-label>
+        <input matInput [(ngModel)]="bankAccountReq.bankName">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Select Account Type</mat-label>
+        <mat-select [(value)]="bankAccountReq.accountType">
+            <mat-option value="CHECKING_ACCOUNT">Checking</mat-option>
+            <mat-option value="SAVINGS_ACCOUNT">Savings</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Select Currency</mat-label>
+        <mat-select [(value)]="bankAccountReq.currency">
+            <mat-option value="RON">RON</mat-option>
+            <mat-option value="USD">USD</mat-option>
+            <mat-option value="EUR">EUR</mat-option>
+        </mat-select>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>CANCEL</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="addBankAccount()">SUBMIT</button>
+</mat-dialog-actions>

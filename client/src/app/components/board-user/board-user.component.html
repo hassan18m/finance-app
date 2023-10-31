@@ -1,130 +1,132 @@
-<div class="example-action-buttons">
-    <button mat-button (click)="accordion.openAll()">Expand All</button>
-    <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+<div class="container">
+    <div class="example-action-buttons">
+        <button mat-button (click)="accordion.openAll()">Expand All</button>
+        <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+    </div>
+    <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Balance
+                </mat-panel-title>
+                <mat-panel-description>
+                    Total Balance: {{ userTotalBalance }} RON
+                    <mat-icon>account_balance_wallet</mat-icon>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div *ngIf="userDetails">
+                <div *ngFor="let bankAccount of userDetails.bankAccounts">
+                    <hr>
+                    <p>NO: {{ bankAccount.accountNumber }} | Name: {{ bankAccount.bankName }} | Balance: {{
+                        bankAccount.balance | currency:bankAccount.currency }}</p>
+                </div>
+            </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Bank Accounts
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{ noOfBankAccounts }}
+                    <mat-icon>account_balance</mat-icon>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div *ngIf="userDetails">
+                <div *ngFor="let bankAccount of userDetails.bankAccounts">
+                    <hr>
+                    <p>Account Number: {{ bankAccount.accountNumber }}</p>
+                    <p>Account Type: {{ bankAccount.accountType }}</p>
+                    <p>Bank Name: {{ bankAccount.bankName }}</p>
+                    <p>Balance: {{ bankAccount.balance | currency:bankAccount.currency }}</p>
+                    <p>Open Date: {{ bankAccount.openDate }}</p>
+                    <p *ngIf="bankAccount.closedDate!=null">Bank Name: {{ bankAccount.closedDate }}</p>
+                    <p>Status: {{ bankAccount.status }}</p>
+                </div>
+            </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Transactions
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{ noOfTransactions }}
+                    <mat-icon>swap_horizontal_circle</mat-icon>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div *ngIf="transactions.length > 0">
+                <div *ngFor="let transaction of transactions">
+                    <hr>
+                    <p>Amount: {{ transaction.amount | currency:'USD' }}</p>
+                    <p>Transaction Time: {{ transaction.transactionDateTime }}</p>
+                    <p>Transaction Type: {{ transaction.transactionType }}</p>
+                    <div *ngIf="transaction.transactionType==='EXPENSE'">
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Expense Categories
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Something
+                                    <mat-icon>attach_money</mat-icon>
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <p>Category Name: {{ transaction.expenseCategory.categoryName }}</p>
+                            <div *ngIf="transaction.expenseCategory.budgets">
+                                <div *ngFor="let budget of transaction.expenseCategory.budgets">
+                                    <hr>
+                                    <p>Budget ID: {{ budget.id }}</p>
+                                    <p>Budget Amount: {{ budget.amount }}</p>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </div>
+                    <p>Description: {{ transaction.description }}</p>
+                    <p>Payment Method: {{ transaction.paymentMethod }}</p>
+                    <p>Location: {{ transaction.location }}</p>
+                </div>
+            </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Budgets
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{ userDetails.budgets.length }}
+                    <mat-icon>trending_up</mat-icon>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div *ngIf="userDetails.budgets">
+                <div *ngFor="let budget of userDetails.budgets">
+                    <p>Budget ID: {{ budget.id }}</p>
+                    <p>Amount: {{ budget.amount }}</p>
+                    <p>Start Date: {{ budget.startDate }}</p>
+                    <p>End Date: {{ budget.endDate }}</p>
+                    <div>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Expense Categories
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    {{ budget.expenseCategories.length }}
+                                    <mat-icon>attach_money</mat-icon>
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <div *ngIf="budget.expenseCategories">
+                                <div *ngFor="let expenseCategory of budget.expenseCategories">
+                                    <p>{{ expenseCategory.categoryName }}</p>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
 </div>
-<mat-accordion class="example-headers-align" multi>
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Balance
-            </mat-panel-title>
-            <mat-panel-description>
-                Total Balance: {{ userTotalBalance }} RON
-                <mat-icon>account_balance_wallet</mat-icon>
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div *ngIf="userDetails">
-            <div *ngFor="let bankAccount of userDetails.bankAccounts">
-                <hr>
-                <p>NO: {{ bankAccount.accountNumber }} | Name: {{ bankAccount.bankName }} | Balance: {{
-                    bankAccount.balance | currency:bankAccount.currency }}</p>
-            </div>
-        </div>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Bank Accounts
-            </mat-panel-title>
-            <mat-panel-description>
-                {{ noOfBankAccounts }}
-                <mat-icon>account_balance</mat-icon>
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div *ngIf="userDetails">
-            <div *ngFor="let bankAccount of userDetails.bankAccounts">
-                <hr>
-                <p>Account Number: {{ bankAccount.accountNumber }}</p>
-                <p>Account Type: {{ bankAccount.accountType }}</p>
-                <p>Bank Name: {{ bankAccount.bankName }}</p>
-                <p>Balance: {{ bankAccount.balance | currency:bankAccount.currency }}</p>
-                <p>Open Date: {{ bankAccount.openDate }}</p>
-                <p *ngIf="bankAccount.closedDate!=null">Bank Name: {{ bankAccount.closedDate }}</p>
-                <p>Status: {{ bankAccount.status }}</p>
-            </div>
-        </div>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Transactions
-            </mat-panel-title>
-            <mat-panel-description>
-                {{ noOfTransactions }}
-                <mat-icon>swap_horizontal_circle</mat-icon>
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div *ngIf="transactions.length > 0">
-            <div *ngFor="let transaction of transactions">
-                <hr>
-                <p>Amount: {{ transaction.amount | currency:'USD' }}</p>
-                <p>Transaction Time: {{ transaction.transactionDateTime }}</p>
-                <p>Transaction Type: {{ transaction.transactionType }}</p>
-                <div *ngIf="transaction.transactionType==='EXPENSE'">
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Expense Categories
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                Something
-                                <mat-icon>attach_money</mat-icon>
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <p>Category Name: {{ transaction.expenseCategory.categoryName }}</p>
-                        <div *ngIf="transaction.expenseCategory.budgets">
-                            <div *ngFor="let budget of transaction.expenseCategory.budgets">
-                                <hr>
-                                <p>Budget ID: {{ budget.id }}</p>
-                                <p>Budget Amount: {{ budget.amount }}</p>
-                            </div>
-                        </div>
-                    </mat-expansion-panel>
-                </div>
-                <p>Description: {{ transaction.description }}</p>
-                <p>Payment Method: {{ transaction.paymentMethod }}</p>
-                <p>Location: {{ transaction.location }}</p>
-            </div>
-        </div>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Budgets
-            </mat-panel-title>
-            <mat-panel-description>
-                {{ userDetails.budgets.length }}
-                <mat-icon>trending_up</mat-icon>
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div *ngIf="userDetails.budgets">
-            <div *ngFor="let budget of userDetails.budgets">
-                <p>Budget ID: {{ budget.id }}</p>
-                <p>Amount: {{ budget.amount }}</p>
-                <p>Start Date: {{ budget.startDate }}</p>
-                <p>End Date: {{ budget.endDate }}</p>
-                <div>
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Expense Categories
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                {{ budget.expenseCategories.length }}
-                                <mat-icon>attach_money</mat-icon>
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <div *ngIf="budget.expenseCategories">
-                            <div *ngFor="let expenseCategory of budget.expenseCategories">
-                                <p>{{ expenseCategory.categoryName }}</p>
-                            </div>
-                        </div>
-                    </mat-expansion-panel>
-                </div>
-            </div>
-        </div>
-    </mat-expansion-panel>
-</mat-accordion>

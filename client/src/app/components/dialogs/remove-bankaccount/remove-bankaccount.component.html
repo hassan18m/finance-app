@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Select Account</h2>
+<mat-dialog-content class="mat-typography">
+
+    <mat-card *ngFor="let bankAccount of userBankAccounts">
+        <mat-card-header>
+            <mat-card-title>{{ bankAccount.accountNumber }}</mat-card-title>
+            <mat-card-subtitle>{{ bankAccount.balance | currency:bankAccount.currency }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions align="end">
+            <button mat-button (click)="getResult(bankAccount.id)">REMOVE</button>
+        </mat-card-actions>
+    </mat-card>
+
+</mat-dialog-content>
+<!-- <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+</mat-dialog-actions> -->
