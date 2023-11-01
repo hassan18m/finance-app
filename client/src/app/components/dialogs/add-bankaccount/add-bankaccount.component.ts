@@ -1,41 +1,48 @@
-import { Component, inject } from '@angular/core';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { Component } from '@angular/core';
 import { BankAccountService } from 'src/app/services/bank-account.service';
-import { SnackbarComponent } from './snackbar/snackbar.component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-transaction',
   templateUrl: './add-bankaccount.component.html',
   styleUrls: ['./add-bankaccount.component.css']
 })
+
 export class AddBankAccountComponent {
 
-  bankAccountReq: any = {
-    bankName: '',
-    accountType: '',
-    currency: ''
+  addBankAccountReq: any = {
+    bankName: "",
+    accountType: "",
+    currency: ""
   }
 
-  constructor(private bankAccountService: BankAccountService,
-    private _snackBar: MatSnackBar) { }
+  form: FormGroup = new FormGroup({
+    bankAccountName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    accountType: new FormControl('', [Validators.required]),
+    accountCurrency: new FormControl('', [Validators.required])
+  });
+  submitted: boolean = false;
+
+  constructor(private bankAccountService: BankAccountService) { }
 
   addBankAccount() {
-    this.bankAccountService.addBankAccount(this.bankAccountReq).subscribe({
-      next: res => {
-        this.openSnackBar();
-        console.log(res);
-      },
-      error: err => {
-        console.log(err);
-      }
-    });
+    if (this.submitted && !this.form.invalid) {
+      this.addBankAccountReq.bankName = this.form.value.bankAccountName;
+      this.addBankAccountReq.accountType = this.form.value.accountType;
+      this.addBankAccountReq.currency = this.form.value.accountCurrency;
+
+      this.bankAccountService.addBankAccount(this.addBankAccountReq).subscribe({ error: err => console.log(err) });
+    }
   }
 
-  durationInSeconds = 3;
-
-  openSnackBar() {
-    this._snackBar.openFromComponent(SnackbarComponent, {
-      duration: this.durationInSeconds * 1000,
-    });
+  onSubmit() {
+    this.submitted = true;
+  }
+  getErrorMessage(): string {
+    if (this.form.get('bankAccountName')?.hasError('minlength')) {
+      return 'Minimum characters: 3';
+    }
+    return 'You must enter a value';
   }
 }
+

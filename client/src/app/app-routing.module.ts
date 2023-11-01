@@ -9,6 +9,7 @@ import { BoardUserComponent } from './components/board-user/board-user.component
 import { BoardModeratorComponent } from './components/board-moderator/board-moderator.component';
 import { BoardAdminComponent } from './components/board-admin/board-admin.component';
 import { TestSplitScreenComponent } from './components/test-split-screen/test-split-screen.component';
+import { RemoveBankaccountComponent } from './components/dialogs/remove-bankaccount/remove-bankaccount.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'mod', component: BoardModeratorComponent },
   { path: 'admin', component: BoardAdminComponent },
   { path: 'test', component: TestSplitScreenComponent },
+  { path: 'remove-bank-account', component: RemoveBankaccountComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

@@ -13,7 +13,7 @@ export class BankAccountService {
 
   nonUser!: User;
 
-  private url: string = "http://localhost:8080/api/v1/users/";
+  private bankAccountURL: string = "http://localhost:8080/api/v1/bank-accounts/";
   private userId: string = this.storageSerivce.getUser().id;
   private getBankAccountsURL: string = `http://localhost:8080/api/v1/bank-accounts/user/${this.userId}`;
   private addBankAccountURL: string = `http://localhost:8080/api/v1/users/${this.userId}/add-bank-account`;
@@ -40,11 +40,16 @@ export class BankAccountService {
     return this.http.get<BankAccount[]>(this.getBankAccountsURL, { withCredentials: true });
   }
 
-  addBankAccount(bankAccount: BankAccount): Observable<BankAccount> {
+  addBankAccount(bankAccountReq: any): Observable<BankAccount> {
     if (this.isLoggedIn()) {
-      return this.http.post<BankAccount>(this.addBankAccountURL, bankAccount, { withCredentials: true });
+      return this.http.post<BankAccount>(this.addBankAccountURL, bankAccountReq, { withCredentials: true });
     }
 
     return new Observable;
+  }
+
+  deleteBankAccount(bankAccountId: string) {
+    const deleteURL = this.bankAccountURL + bankAccountId;
+    return this.http.delete<BankAccount>(deleteURL, { withCredentials: true });
   }
 }

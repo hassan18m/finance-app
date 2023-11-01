@@ -1,26 +1,36 @@
-<h2 mat-dialog-title>New Bank Account</h2>
-<mat-dialog-content class="mat-typography">
-    <mat-form-field>
-        <mat-label>Bank Name</mat-label>
-        <input matInput [(ngModel)]="bankAccountReq.bankName">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Select Account Type</mat-label>
-        <mat-select [(value)]="bankAccountReq.accountType">
-            <mat-option value="CHECKING_ACCOUNT">Checking</mat-option>
-            <mat-option value="SAVINGS_ACCOUNT">Savings</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Select Currency</mat-label>
-        <mat-select [(value)]="bankAccountReq.currency">
-            <mat-option value="RON">RON</mat-option>
-            <mat-option value="USD">USD</mat-option>
-            <mat-option value="EUR">EUR</mat-option>
-        </mat-select>
-    </mat-form-field>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>CANCEL</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="addBankAccount()">SUBMIT</button>
-</mat-dialog-actions>
+<form (click)="onSubmit()" [formGroup]="form">
+    <h2 mat-dialog-title>New Bank Account</h2>
+    <mat-dialog-content class="mat-typography">
+        <div class="example-container">
+            <mat-form-field>
+                <mat-label>Enter Bank Name</mat-label>
+                <input matInput placeholder="Bank Name" formControlName="bankAccountName" required>
+                <mat-error *ngIf="form.get('bankAccountName')?.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Account Type</mat-label>
+                <mat-select formControlName="accountType" required>
+                    <mat-option value="CHECKING_ACCOUNT">Checking</mat-option>
+                    <mat-option value="SAVINGS_ACCOUNT">Savings</mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('accountType')?.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Currency</mat-label>
+                <mat-select formControlName="accountCurrency" required>
+                    <mat-option value="RON">RON</mat-option>
+                    <mat-option value="USD">USD</mat-option>
+                    <mat-option value="EUR">EUR</mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('accountCurrency')?.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>CANCEL</button>
+        <button mat-button cdkFocusInitial (click)="addBankAccount()" *ngIf="!form.invalid"
+            [mat-dialog-close]="true">SUBMIT</button>
+    </mat-dialog-actions>
+</form>

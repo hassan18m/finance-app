@@ -31,7 +31,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { UpdateBankaccountComponent } from './components/dialogs/update-bankaccount/update-bankaccount.component';
 import { RemoveBankaccountComponent } from './components/dialogs/remove-bankaccount/remove-bankaccount.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { SnackbarComponent } from './components/dialogs/add-bankaccount/snackbar/snackbar.component';
 
 
 
@@ -49,7 +48,6 @@ import { SnackbarComponent } from './components/dialogs/add-bankaccount/snackbar
     AddBankAccountComponent,
     UpdateBankaccountComponent,
     RemoveBankaccountComponent,
-    SnackbarComponent,
   ],
   imports: [
     BrowserModule,

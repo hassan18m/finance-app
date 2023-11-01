@@ -7,7 +7,7 @@
             <mat-card-subtitle>{{ bankAccount.balance | currency:bankAccount.currency }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions align="end">
-            <button mat-button (click)="getResult(bankAccount.id)">REMOVE</button>
+            <button mat-button (click)="deleteBankAccount(bankAccount.id)">REMOVE</button>
         </mat-card-actions>
     </mat-card>
 

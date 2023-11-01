@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { BankAccountService } from 'src/app/services/bank-account.service';
 import { BankAccount } from 'src/app/types/bank-account';
 
@@ -9,9 +10,7 @@ import { BankAccount } from 'src/app/types/bank-account';
   styleUrls: ['./remove-bankaccount.component.css']
 })
 export class RemoveBankaccountComponent implements OnInit {
-
   userBankAccounts!: BankAccount[];
-  bankAccountToDeleteId!: number;
 
   constructor(private bankAccountService: BankAccountService,
     private _snackBar: MatSnackBar) { }
@@ -31,18 +30,19 @@ export class RemoveBankaccountComponent implements OnInit {
     });
   }
 
-  getResult(bankAccountId: number) {
-    this.bankAccountToDeleteId = bankAccountId;
-    console.log(this.bankAccountToDeleteId);
-  }
-  // TODO: after pressing "DELETE BUTTON" close the dialog and when opening the dialog again: update data.
-
-  durationInSeconds = 5;
-
-  openSnackBar() {
-    this._snackBar.openFromComponent(RemoveBankaccountComponent, {
-      duration: this.durationInSeconds * 1000,
+  deleteBankAccount(bankAccountId: number): void {
+    this.bankAccountService.deleteBankAccount(bankAccountId.toString()).subscribe({
+      next: res => {
+        this.openSnackBar('Account successfully deleted!');
+        this.ngOnInit();
+      },
+      error: err => {
+        this.openSnackBar('There was an error deleting account!');
+      }
     });
   }
-  snackBarRef = inject(MatSnackBarRef);
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, undefined, { duration: 4000 });
+  }
 }
