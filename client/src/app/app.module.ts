@@ -22,7 +22,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { TestSplitScreenComponent } from './components/test-split-screen/test-split-screen.component';
+import { BankAccountComponent } from './components/bank-account/bank-account.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -34,6 +34,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddTransactionComponent } from './components/dialogs/add-transaction/add-transaction.component';
 import { UpdateTransactionComponent } from './components/dialogs/update-transaction/update-transaction.component';
 import { RemoveTransactionComponent } from './components/dialogs/remove-transaction/remove-transaction.component';
+import { ShowTransactionsComponent } from './components/dialogs/show-transactions/show-transactions.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 
@@ -47,13 +52,14 @@ import { RemoveTransactionComponent } from './components/dialogs/remove-transact
     BoardAdminComponent,
     BoardModeratorComponent,
     BoardUserComponent,
-    TestSplitScreenComponent,
+    BankAccountComponent,
     AddBankAccountComponent,
     UpdateBankaccountComponent,
     RemoveBankaccountComponent,
     AddTransactionComponent,
     UpdateTransactionComponent,
     RemoveTransactionComponent,
+    ShowTransactionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,6 +82,10 @@ import { RemoveTransactionComponent } from './components/dialogs/remove-transact
     MatDialogModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatDividerModule,
+    MatProgressBarModule,
+    MatStepperModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

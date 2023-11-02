@@ -8,7 +8,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { BoardUserComponent } from './components/board-user/board-user.component';
 import { BoardModeratorComponent } from './components/board-moderator/board-moderator.component';
 import { BoardAdminComponent } from './components/board-admin/board-admin.component';
-import { TestSplitScreenComponent } from './components/test-split-screen/test-split-screen.component';
+import { BankAccountComponent } from './components/bank-account/bank-account.component';
 import { RemoveBankaccountComponent } from './components/dialogs/remove-bankaccount/remove-bankaccount.component';
 
 const routes: Routes = [
@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'user', component: BoardUserComponent },
   { path: 'mod', component: BoardModeratorComponent },
   { path: 'admin', component: BoardAdminComponent },
-  { path: 'test', component: TestSplitScreenComponent },
+  { path: 'bank-account', component: BankAccountComponent },
   { path: 'remove-bank-account', component: RemoveBankaccountComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];

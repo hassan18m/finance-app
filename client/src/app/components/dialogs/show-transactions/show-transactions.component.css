@@ -1,0 +1,18 @@
+.example-tab-icon {
+    margin-right: 8px;
+}
+
+mat-tab-group {
+    width: 80vw;
+    height: 80vh;
+}
+
+div {
+    margin: 10px;
+}
+
+button {
+    background-color: #d52d2d;
+    color: white;
+    border: 1px solid black;
+}

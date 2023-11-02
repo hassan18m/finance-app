@@ -1,0 +1,36 @@
+.example-action-buttons {
+    padding-bottom: 20px;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.example-headers-align .mat-mdc-form-field+.mat-mdc-form-field {
+    margin-left: 8px;
+}
+
+.container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.transaction-buttons {
+    display: flex;
+    margin: 10px;
+}
+
+.transaction-buttons-left {
+    margin-right: auto;
+}
+
+.transaction-buttons-right {
+    margin-left: auto;
+}
+
+#remove-button {
+    background-color: #d52d2d;
+    color: white;
+    border: 1px solid black;
+}

@@ -1,0 +1,84 @@
+<mat-tab-group>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">trending_down</mat-icon>
+            EXPENSE
+        </ng-template>
+        <div *ngFor="let transaction of bankAccountTransactions">
+            <div *ngIf=" transaction.transactionType === 'EXPENSE' ">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Amount: {{ transaction.amount }}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{ transaction.transactionDateTime }}
+                            <mat-icon>swap_horizontal_circle</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <hr>
+                    <p>Amount: {{ transaction.amount | currency:'USD' }}</p>
+                    <p>Transaction Time: {{ transaction.transactionDateTime }}</p>
+                    <p>Transaction Type: {{ transaction.transactionType }}</p>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Expense Categories
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Something
+                                <mat-icon>attach_money</mat-icon>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <p>Category Name: {{ transaction.expenseCategory.categoryName }}</p>
+                        <div *ngIf="transaction.expenseCategory.budgets">
+                            <div *ngFor="let budget of transaction.expenseCategory.budgets">
+                                <hr>
+                                <p>Budget ID: {{ budget.id }}</p>
+                                <p>Budget Amount: {{ budget.amount }}</p>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                    <p>Description: {{ transaction.description }}</p>
+                    <p>Payment Method: {{ transaction.paymentMethod }}</p>
+                    <p>Location: {{ transaction.location }}</p>
+                    <div class="buttons" align="end">
+                        <button mat-button (click)="deleteTransaction(transaction.id)">REMOVE</button>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+        </div>
+    </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">trending_up</mat-icon>
+            INCOME
+        </ng-template>
+        <div *ngFor="let transaction of bankAccountTransactions">
+            <div *ngIf=" transaction.transactionType === 'INCOME' ">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Amount: {{ transaction.amount }}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{ transaction.transactionDateTime }}
+                            <mat-icon>swap_horizontal_circle</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <hr>
+                    <p>Amount: {{ transaction.amount | currency:'USD' }}</p>
+                    <p>Transaction Time: {{ transaction.transactionDateTime }}</p>
+                    <p>Transaction Type: {{ transaction.transactionType }}</p>
+                    <p>Description: {{ transaction.description }}</p>
+                    <p>Payment Method: {{ transaction.paymentMethod }}</p>
+                    <p>Location: {{ transaction.location }}</p>
+                    <div class="buttons" align="end">
+                        <button mat-button (click)="deleteTransaction(transaction.id)">REMOVE</button>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

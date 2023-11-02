@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="example-action-buttons">
+        <button mat-button (click)="accordion.openAll()">Expand All</button>
+        <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+        <button mat-button (click)="openAddBankAccountDialog()">ADD NEW</button>
+
+    </div>
+    <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel *ngFor="let bankAccount of bankAccounts">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ bankAccount.accountNumber }}
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{ bankAccount.balance | currency: bankAccount.currency }}
+                    <mat-icon>account_balance_wallet</mat-icon>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>Account Number: {{ bankAccount.accountNumber }}</p>
+            <mat-divider></mat-divider>
+            <p>Account Type: {{ bankAccount.accountType }}</p>
+            <mat-divider></mat-divider>
+            <p>Bank Name: {{ bankAccount.bankName }}</p>
+            <mat-divider></mat-divider>
+            <p>Balance: {{ bankAccount.balance | currency:bankAccount.currency }}</p>
+            <mat-divider></mat-divider>
+            <p>Open Date: {{ bankAccount.openDate }}</p>
+            <mat-divider></mat-divider>
+            <p *ngIf="bankAccount.closedDate!=null">Bank Name: {{ bankAccount.closedDate }}</p>
+            <mat-divider></mat-divider>
+            <p>Status: {{ bankAccount.status }}</p>
+            <mat-divider></mat-divider>
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Transactions</mat-card-title>
+                    <mat-card-subtitle>{{ bankAccount.transactions.length }}</mat-card-subtitle>
+                </mat-card-header>
+                <div class="transaction-buttons">
+                    <span class="transaction-buttons-left">
+                        <button mat-button *ngIf="bankAccount.transactions.length > 0"
+                            (click)="openTransactionsDialog(bankAccount.transactions)">SEE ALL</button>
+                    </span>
+                    <span class="transaction-buttons-right">
+                        <button mat-button>ADD EXPENSE</button>
+                        <button mat-button>ADD INCOME</button>
+                    </span>
+                </div>
+            </mat-card>
+            <hr>
+            <button id="remove-button" mat-button (click)="deleteBankAccount(bankAccount.id)">REMOVE</button>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
