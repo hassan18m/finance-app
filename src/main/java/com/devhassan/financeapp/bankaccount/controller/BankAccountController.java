@@ -45,6 +45,15 @@ public class BankAccountController {
         }
     }
 
+    @GetMapping("/{bankAccountId}/transactions")
+    public ResponseEntity<?> getBankAccountTransactions(@PathVariable Long bankAccountId) {
+        try {
+            return ResponseEntity.ok(bankAccountService.getBankAccountTransactions(bankAccountId));
+        }catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("{bankAccountId}/transactions/expense")
     public ResponseEntity<?> addExpenseTransactionToBankAccount(@PathVariable Long bankAccountId, @RequestBody TransactionRequest transactionRequest) {
         try {

@@ -10,6 +10,7 @@ import com.devhassan.financeapp.globalhelper.MapEntity;
 import com.devhassan.financeapp.transaction.entity.Transaction;
 import com.devhassan.financeapp.transaction.entity.enums.TransactionType;
 import com.devhassan.financeapp.transaction.entity.model.TransactionRequest;
+import com.devhassan.financeapp.transaction.entity.model.TransactionResponse;
 import com.devhassan.financeapp.transaction.repository.TransactionRepository;
 import com.devhassan.financeapp.exceptions.NotFoundException;
 import com.devhassan.financeapp.user.entity.User;
@@ -67,6 +68,17 @@ public class BankAccountServiceImpl implements BankAccountService {
         return bankAccountRepository.findBankAccountsByUser_Id(userId)
                 .stream()
                 .map(MapEntity::bankAccountEntityToResponse)
+                .toList();
+    }
+
+    @Override
+    public List<TransactionResponse> getBankAccountTransactions(Long bankAccountId) {
+        BankAccount foundBankAccount = bankAccountRepository.findById(bankAccountId)
+                .orElseThrow(() -> new NotFoundException("Bank account not found!"));
+
+        return foundBankAccount.getTransactions()
+                .stream()
+                .map(MapEntity::transactionEntityToResponse)
                 .toList();
     }
 
