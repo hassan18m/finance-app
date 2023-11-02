@@ -10,6 +10,12 @@
     background-size: cover;
 }
 
+.transaction-header-image {
+    background-image: url('src\assets\images\transaction-icon.svg');
+    background-size: cover;
+}
+
+
 #card-container {
     display: flex;
     align-items: center;
