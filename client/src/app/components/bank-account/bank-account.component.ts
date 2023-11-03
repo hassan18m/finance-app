@@ -75,6 +75,10 @@ export class BankAccountComponent implements OnInit {
 
   openTransactionsDialog(transactions: Transaction[]) {
     const dialogRef = this.dialog.open(ShowTransactionsComponent, { data: transactions });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });
   }
 
   openExpenseTransactionDialog(bankAccountId: number) {
