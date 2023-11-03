@@ -33,12 +33,13 @@ import { RemoveBankaccountComponent } from './components/dialogs/remove-bankacco
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddTransactionComponent } from './components/dialogs/add-transaction/add-transaction.component';
 import { UpdateTransactionComponent } from './components/dialogs/update-transaction/update-transaction.component';
-import { RemoveTransactionComponent } from './components/dialogs/remove-transaction/remove-transaction.component';
 import { ShowTransactionsComponent } from './components/dialogs/show-transactions/show-transactions.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
+import { AddExpenseTransactionComponent } from './components/dialogs/add-expense-transaction/add-expense-transaction.component';
+import { AddIncomeTransactionComponent } from './components/dialogs/add-income-transaction/add-income-transaction.component';
 
 
 
@@ -58,8 +59,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     RemoveBankaccountComponent,
     AddTransactionComponent,
     UpdateTransactionComponent,
-    RemoveTransactionComponent,
     ShowTransactionsComponent,
+    AddExpenseTransactionComponent,
+    AddIncomeTransactionComponent,
   ],
   imports: [
     BrowserModule,

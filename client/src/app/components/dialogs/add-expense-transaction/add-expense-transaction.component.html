@@ -1,0 +1,51 @@
+<form (click)="onSubmit()" [formGroup]="form">
+    <h2 mat-dialog-title>New Expense Transaction</h2>
+    <mat-dialog-content class="mat-typography">
+        <div class="example-container">
+            <mat-form-field>
+                <mat-label>Enter Amount</mat-label>
+                <input type="number" matInput placeholder="1234" formControlName="amount">
+                <mat-error *ngIf="form.get('amount')?.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <input matInput placeholder="Food and Drinks" formControlName="description" required>
+                <mat-error *ngIf="form.get('description')?.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Category Name</mat-label>
+                <input matInput placeholder="Groceries" formControlName="categoryName" required>
+                <mat-error *ngIf="form.get('categoryName')?.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Recipient</mat-label>
+                <input matInput placeholder="LIDL RO S.R.L" formControlName="recipient" required>
+                <mat-error *ngIf="form.get('recipient')?.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Payment Method</mat-label>
+                <mat-select formControlName="paymentMethod" required>
+                    <mat-option value="CARD">Card</mat-option>
+                    <mat-option value="CASH">Cash</mat-option>
+                    <mat-option value="BANK_TRANSFER">Bank Transfer</mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('paymentMethod')?.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Location</mat-label>
+                <input matInput placeholder="Bd. Unirii, -1" formControlName="location" required>
+                <mat-error *ngIf="form.get('location')?.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>CANCEL</button>
+        <button mat-button cdkFocusInitial (click)="addExpenseTransaction()" *ngIf="!form.invalid"
+            [mat-dialog-close]="true">SUBMIT</button>
+    </mat-dialog-actions>
+</form>

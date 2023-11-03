@@ -41,8 +41,8 @@
                             (click)="openTransactionsDialog(bankAccount.transactions)">SEE ALL</button>
                     </span>
                     <span class="transaction-buttons-right">
-                        <button mat-button>ADD EXPENSE</button>
-                        <button mat-button>ADD INCOME</button>
+                        <button mat-button (click)="openExpenseTransactionDialog(bankAccount.id)">ADD EXPENSE</button>
+                        <button mat-button (click)="openIncomeTransactionDialog(bankAccount.id)">ADD INCOME</button>
                     </span>
                 </div>
             </mat-card>
