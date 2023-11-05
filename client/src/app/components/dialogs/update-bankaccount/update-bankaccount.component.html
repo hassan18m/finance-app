@@ -1,49 +1,33 @@
-<h2 mat-dialog-title>Select Account</h2>
-<mat-dialog-content class="mat-typography">
+<form [formGroup]="form">
+    <h2 mat-dialog-title>Update Bank Account</h2>
+    <h3 mat-dialog-title>Complete the fields you want to update!</h3>
+    <mat-dialog-content class="mat-typography">
+        <div class="example-container">
+            <mat-form-field>
+                <mat-label>Enter Bank Name</mat-label>
+                <input matInput placeholder="Bank Name" formControlName="bankAccountName">
+            </mat-form-field>
 
-    <mat-accordion class="example-headers-align" multi>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Bank Account
-                </mat-panel-title>
-                <mat-panel-description>
-                    RO116
-                    <mat-icon>account_balance_wallet</mat-icon>
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            SOME CONTENT
-        </mat-expansion-panel>
+            <mat-form-field>
+                <mat-label>Account Type</mat-label>
+                <mat-select formControlName="accountType">
+                    <mat-option value="CHECKING_ACCOUNT">Checking</mat-option>
+                    <mat-option value="SAVINGS_ACCOUNT">Savings</mat-option>
+                </mat-select>
+            </mat-form-field>
 
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Bank Account
-                </mat-panel-title>
-                <mat-panel-description>
-                    RO118
-                    <mat-icon>account_balance_wallet</mat-icon>
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            SOME CONTENT
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Bank Account
-                </mat-panel-title>
-                <mat-panel-description>
-                    RO117
-                    <mat-icon>account_balance_wallet</mat-icon>
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            SOME CONTENT
-        </mat-expansion-panel>
-    </mat-accordion>
-
-</mat-dialog-content>
-<!-- <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
-</mat-dialog-actions> -->
+            <mat-form-field>
+                <mat-label>Currency</mat-label>
+                <mat-select formControlName="accountCurrency">
+                    <mat-option value="RON">RON</mat-option>
+                    <mat-option value="USD">USD</mat-option>
+                    <mat-option value="EUR">EUR</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>CANCEL</button>
+        <button mat-button cdkFocusInitial (click)="updateBankAccount()" [mat-dialog-close]="true">SUBMIT</button>
+    </mat-dialog-actions>
+</form>

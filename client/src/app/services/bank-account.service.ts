@@ -52,4 +52,9 @@ export class BankAccountService {
     const deleteURL = this.bankAccountURL + bankAccountId;
     return this.http.delete<BankAccount>(deleteURL, { withCredentials: true });
   }
+
+  updateBankAccount(bankAccountId: number, bankAccountUpdate: any): Observable<BankAccount> {
+    const updateURL: string = this.bankAccountURL + 'update/' + bankAccountId;
+    return this.http.patch<BankAccount>(updateURL, bankAccountUpdate, { withCredentials: true });
+  }
 }

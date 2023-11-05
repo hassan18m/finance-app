@@ -16,21 +16,30 @@
     margin-bottom: 20px;
 }
 
-.transaction-buttons {
+.transaction-buttons,
+.crud-buttons {
     display: flex;
     margin: 10px;
 }
 
-.transaction-buttons-left {
+.transaction-buttons-left,
+.crud-buttons-left {
     margin-right: auto;
 }
 
-.transaction-buttons-right {
+.transaction-buttons-right,
+.crud-buttons-right {
     margin-left: auto;
 }
 
 #remove-button {
     background-color: #d52d2d;
+    color: white;
+    border: 1px solid black;
+}
+
+#update-button {
+    background-color: rgb(23, 235, 118);
     color: white;
     border: 1px solid black;
 }

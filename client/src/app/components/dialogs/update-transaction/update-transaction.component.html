@@ -1,1 +1,40 @@
-<p>update-transaction works!</p>
+<form [formGroup]="form">
+    <h2 mat-dialog-title>Update Transaction</h2>
+    <h3 mat-dialog-title>Complete only the fields you want to update!</h3>
+    <mat-dialog-content class="mat-typography">
+        <div class="example-container">
+            <mat-form-field>
+                <mat-label>Amount</mat-label>
+                <input type="number" matInput placeholder="123.45" formControlName="amount">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <input matInput placeholder="OLED Monitor" formControlName="description">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Recipient</mat-label>
+                <input matInput placeholder="PC Garage" formControlName="recipient">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Payment Method</mat-label>
+                <mat-select formControlName="paymentMethod">
+                    <mat-option value="CARD">CARD</mat-option>
+                    <mat-option value="CASH">CASH</mat-option>
+                    <mat-option value="BANK_TRANSFER">Bank Transfer</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Location</mat-label>
+                <input matInput placeholder="Bucharest, Romania" formControlName="location">
+            </mat-form-field>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>CANCEL</button>
+        <button mat-button cdkFocusInitial (click)="updateTransaction()" [mat-dialog-close]="true">SUBMIT</button>
+    </mat-dialog-actions>
+</form>

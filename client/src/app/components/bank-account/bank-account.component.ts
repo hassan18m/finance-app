@@ -4,7 +4,6 @@ import { AddBankAccountComponent } from '../dialogs/add-bankaccount/add-bankacco
 import { UpdateBankaccountComponent } from '../dialogs/update-bankaccount/update-bankaccount.component';
 import { RemoveBankaccountComponent } from '../dialogs/remove-bankaccount/remove-bankaccount.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AddTransactionComponent } from '../dialogs/add-transaction/add-transaction.component';
 import { UpdateTransactionComponent } from '../dialogs/update-transaction/update-transaction.component';
 import { MatAccordion } from '@angular/material/expansion';
 import { BankAccountService } from 'src/app/services/bank-account.service';
@@ -54,12 +53,20 @@ export class BankAccountComponent implements OnInit {
     });
   }
 
-  // openUpdateBankAccountDialog() {
-  //   const dialogRef = this.dialog.open(UpdateBankaccountComponent);
-  // }
-  openRemoveBankAccountDialog() {
-    const dialogRef = this.dialog.open(RemoveBankaccountComponent);
+  openUpdateBankAccountDialog(bankAccountToUpdate: BankAccount) {
+    const dialogRef = this.dialog.open(UpdateBankaccountComponent, { data: bankAccountToUpdate });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'Account updated successfully!') {
+        this.ngOnInit();
+        this.openSnackBar(result);
+      }
+      if (result === 'Error updating account, try again!') {
+        this.openSnackBar(result);
+      }
+    });
   }
+
 
   deleteBankAccount(bankAccountId: number): void {
     this.bankAccountService.deleteBankAccount(bankAccountId.toString()).subscribe({
@@ -85,7 +92,7 @@ export class BankAccountComponent implements OnInit {
     const dialogRef = this.dialog.open(AddExpenseTransactionComponent, { data: bankAccountId });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== true || result !== false) {
+      if (result === 'Balance too low! Transaction cancelled.') {
         this.openSnackBar(result);
       }
       if (result === true) {

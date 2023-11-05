@@ -26,7 +26,6 @@
                                 Expense Categories
                             </mat-panel-title>
                             <mat-panel-description>
-                                Something
                                 <mat-icon>attach_money</mat-icon>
                             </mat-panel-description>
                         </mat-expansion-panel-header>
@@ -39,11 +38,17 @@
                             </div>
                         </div>
                     </mat-expansion-panel>
+                    <p>Recipient: {{ transaction.recipient }}</p>
                     <p>Description: {{ transaction.description }}</p>
                     <p>Payment Method: {{ transaction.paymentMethod }}</p>
                     <p>Location: {{ transaction.location }}</p>
-                    <div class="buttons" align="end">
-                        <button mat-button (click)="deleteTransaction(transaction.id)">REMOVE</button>
+                    <div class="crud-buttons">
+                        <span class="crud-buttons-left">
+                            <button mat-button (click)="deleteTransaction(transaction.id)">REMOVE</button>
+                        </span>
+                        <span class="crud-buttons-right">
+                            <button mat-button (click)="updateTransaction(transaction)">UPDATE</button>
+                        </span>
                     </div>
                 </mat-expansion-panel>
             </div>
@@ -72,10 +77,16 @@
                     <p>Transaction Time: {{ transaction.transactionDateTime }}</p>
                     <p>Transaction Type: {{ transaction.transactionType }}</p>
                     <p>Description: {{ transaction.description }}</p>
+                    <p>Recipient: {{ transaction.recipient }}</p>
                     <p>Payment Method: {{ transaction.paymentMethod }}</p>
                     <p>Location: {{ transaction.location }}</p>
-                    <div class="buttons" align="end">
-                        <button mat-button (click)="deleteTransaction(transaction.id)">REMOVE</button>
+                    <div class="crud-buttons">
+                        <span class="crud-buttons-left">
+                            <button mat-button (click)="deleteTransaction(transaction.id)">REMOVE</button>
+                        </span>
+                        <span class="crud-buttons-right">
+                            <button mat-button (click)="updateTransaction(transaction)">UPDATE</button>
+                        </span>
                     </div>
                 </mat-expansion-panel>
             </div>

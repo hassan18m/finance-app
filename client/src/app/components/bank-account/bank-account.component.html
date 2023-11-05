@@ -47,7 +47,14 @@
                 </div>
             </mat-card>
             <hr>
-            <button id="remove-button" mat-button (click)="deleteBankAccount(bankAccount.id)">REMOVE</button>
+            <div class="crud-buttons">
+                <span class="crud-buttons-left">
+                    <button id="remove-button" mat-button (click)="deleteBankAccount(bankAccount.id)">REMOVE</button>
+                </span>
+                <span class="crud-buttons-right">
+                    <button id="update-button" mat-button (click)="openUpdateBankAccountDialog(bankAccount)">UPDATE</button>
+                </span>
+            </div>
         </mat-expansion-panel>
     </mat-accordion>
 </div>
