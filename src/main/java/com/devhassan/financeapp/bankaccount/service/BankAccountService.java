@@ -1,5 +1,6 @@
 package com.devhassan.financeapp.bankaccount.service;
 
+import com.devhassan.financeapp.bankaccount.entity.model.BankAccountRequest;
 import com.devhassan.financeapp.bankaccount.entity.model.BankAccountResponse;
 import com.devhassan.financeapp.transaction.entity.model.TransactionRequest;
 import com.devhassan.financeapp.transaction.entity.model.TransactionResponse;
@@ -15,6 +16,7 @@ public interface BankAccountService {
     List<TransactionResponse> getBankAccountTransactions(Long bankAccountId);
 
     BankAccountResponse addTransactionToBankAccount(Long bankAccountId, TransactionRequest transactionRequest);
+    BankAccountResponse updateBankAccount(Long bankAccountId, BankAccountRequest bankAccountRequest);
     void removeBankAccount(Long bankAccountId);
     void deleteBankAccountsFromUser(UUID userId);
 }

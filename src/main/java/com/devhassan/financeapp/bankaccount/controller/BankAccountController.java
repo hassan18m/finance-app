@@ -1,5 +1,6 @@
 package com.devhassan.financeapp.bankaccount.controller;
 
+import com.devhassan.financeapp.bankaccount.entity.model.BankAccountRequest;
 import com.devhassan.financeapp.bankaccount.entity.model.BankAccountResponse;
 import com.devhassan.financeapp.bankaccount.service.BankAccountService;
 import com.devhassan.financeapp.exceptions.NegativeBalanceException;
@@ -49,8 +50,8 @@ public class BankAccountController {
     public ResponseEntity<?> getBankAccountTransactions(@PathVariable Long bankAccountId) {
         try {
             return ResponseEntity.ok(bankAccountService.getBankAccountTransactions(bankAccountId));
-        }catch (NotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -71,6 +72,16 @@ public class BankAccountController {
         try {
             transactionRequest.setTransactionType(TransactionType.INCOME);
             return ResponseEntity.ok(bankAccountService.addTransactionToBankAccount(bankAccountId, transactionRequest));
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PatchMapping("/update/{bankAccountId}")
+    public ResponseEntity<?> updateBankAccount(@PathVariable Long bankAccountId,
+                                               @RequestBody BankAccountRequest bankAccountRequest) {
+        try {
+            return ResponseEntity.ok(bankAccountService.updateBankAccount(bankAccountId, bankAccountRequest));
         } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }

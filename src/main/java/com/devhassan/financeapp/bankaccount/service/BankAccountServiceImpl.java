@@ -1,6 +1,8 @@
 package com.devhassan.financeapp.bankaccount.service;
 
 import com.devhassan.financeapp.bankaccount.entity.BankAccount;
+import com.devhassan.financeapp.bankaccount.entity.enums.AccountType;
+import com.devhassan.financeapp.bankaccount.entity.model.BankAccountRequest;
 import com.devhassan.financeapp.bankaccount.entity.model.BankAccountResponse;
 import com.devhassan.financeapp.bankaccount.repository.BankAccountRepository;
 import com.devhassan.financeapp.exceptions.NegativeBalanceException;
@@ -118,6 +120,29 @@ public class BankAccountServiceImpl implements BankAccountService {
         transactionRepository.save(transaction);
         bankAccountRepository.save(foundBankAccount);
 
+        return MapEntity.bankAccountEntityToResponse(foundBankAccount);
+    }
+
+    @Override
+    public BankAccountResponse updateBankAccount(Long bankAccountId, BankAccountRequest bankAccountRequest) {
+        BankAccount foundBankAccount = bankAccountRepository.findById(bankAccountId)
+                .orElseThrow(() -> new NotFoundException("Bank account not found!"));
+
+        if (bankAccountRequest.getBankName() != null &&
+                !bankAccountRequest.getBankName().isEmpty()) {
+            foundBankAccount.setBankName(bankAccountRequest.getBankName());
+        }
+        if (bankAccountRequest.getAccountType() != null) {
+            if (AccountType.getAccountTypes().contains(bankAccountRequest.getAccountType())) {
+                foundBankAccount.setAccountType(bankAccountRequest.getAccountType());
+            }
+        }
+        if (bankAccountRequest.getCurrency() != null &&
+                !bankAccountRequest.getCurrency().isEmpty()) {
+            foundBankAccount.setCurrency(bankAccountRequest.getCurrency());
+        }
+
+        bankAccountRepository.save(foundBankAccount);
         return MapEntity.bankAccountEntityToResponse(foundBankAccount);
     }
 
