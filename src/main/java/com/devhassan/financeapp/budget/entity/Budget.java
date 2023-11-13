@@ -1,5 +1,6 @@
 package com.devhassan.financeapp.budget.entity;
 
+import com.devhassan.financeapp.bankaccount.entity.BankAccount;
 import com.devhassan.financeapp.expensecategory.entity.ExpenseCategory;
 import com.devhassan.financeapp.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,6 +26,9 @@ public class Budget {
     @Column(name = "id", unique = true, nullable = false, updatable = false)
     private Long id;
 
+    @Column(name = "name",nullable = false)
+    private String name;
+
     @Column(name = "amount")
     private BigDecimal amount;
 
@@ -38,6 +42,11 @@ public class Budget {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "bank_id")
+    @JsonIgnore
+    private BankAccount bankAccount;
 
     @ManyToMany
     @JoinTable(

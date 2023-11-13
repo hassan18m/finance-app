@@ -1,5 +1,6 @@
 package com.devhassan.financeapp.transaction.entity.model;
 
+import com.devhassan.financeapp.expensecategory.entity.enums.CategoryName;
 import com.devhassan.financeapp.transaction.entity.enums.PaymentMethod;
 import com.devhassan.financeapp.transaction.entity.enums.TransactionType;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ public class TransactionRequest {
     private BigDecimal amount;
     private String description;
     private TransactionType transactionType;
-    private String categoryName;
+    private CategoryName categoryName;
     private String recipient;
     private PaymentMethod paymentMethod;
     private String location;

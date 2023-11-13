@@ -1,6 +1,7 @@
 package com.devhassan.financeapp.expensecategory.entity;
 
 import com.devhassan.financeapp.budget.entity.Budget;
+import com.devhassan.financeapp.expensecategory.entity.enums.CategoryName;
 import com.devhassan.financeapp.transaction.entity.Transaction;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,8 @@ public class ExpenseCategory {
     private Long id;
 
     @Column(name = "category_name", nullable = false)
-    private String categoryName;
+    @Enumerated(value = EnumType.STRING)
+    private CategoryName categoryName;
 
     @OneToMany(mappedBy = "expenseCategory")
     private Set<Transaction> transactions = new HashSet<>();

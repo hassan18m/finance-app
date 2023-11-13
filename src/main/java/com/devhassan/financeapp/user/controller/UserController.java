@@ -2,6 +2,7 @@ package com.devhassan.financeapp.user.controller;
 
 import com.devhassan.financeapp.bankaccount.entity.model.BankAccountRequest;
 import com.devhassan.financeapp.budget.entity.model.BudgetRequest;
+import com.devhassan.financeapp.exceptions.InvalidDataException;
 import com.devhassan.financeapp.user.entity.model.UserRequest;
 import com.devhassan.financeapp.exceptions.DuplicateDataException;
 import com.devhassan.financeapp.exceptions.NotFoundException;
@@ -83,6 +84,8 @@ public class UserController {
             return ResponseEntity.ok(userService.setBudget(userId, budgetRequest));
         } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (InvalidDataException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
     }
 

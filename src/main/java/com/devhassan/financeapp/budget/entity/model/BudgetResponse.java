@@ -16,9 +16,12 @@ import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BudgetResponse {
     private Long id;
+    private String name;
     private BigDecimal amount;
     private LocalDate startDate;
     private LocalDate endDate;
+    private Long bankAccountId;
     Set<ExpenseCategoryResponse> expenseCategories;
+
 }
 

@@ -7,6 +7,7 @@ import com.devhassan.financeapp.bankaccount.repository.BankAccountRepository;
 import com.devhassan.financeapp.budget.entity.Budget;
 import com.devhassan.financeapp.budget.entity.model.BudgetRequest;
 import com.devhassan.financeapp.budget.repository.BudgetRepository;
+import com.devhassan.financeapp.exceptions.InvalidDataException;
 import com.devhassan.financeapp.expensecategory.entity.ExpenseCategory;
 import com.devhassan.financeapp.expensecategory.repository.ExpenseCategoryRepository;
 import com.devhassan.financeapp.user.entity.User;
@@ -16,6 +17,8 @@ import com.devhassan.financeapp.exceptions.DuplicateDataException;
 import com.devhassan.financeapp.exceptions.NotFoundException;
 import com.devhassan.financeapp.globalhelper.MapEntity;
 import com.devhassan.financeapp.user.repository.UserRepository;
+import jakarta.validation.constraints.NotNull;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -109,16 +112,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse setBudget(UUID userId, BudgetRequest budgetRequest) {
-        User foundUser = userRepository.findById(userId)
-                .orElseThrow(NotFoundException::new);
+        User foundUser = userRepository.findById(userId).orElseThrow(NotFoundException::new);
 
         Budget budget = MapEntity.budgetRequestToEntity(budgetRequest);
         setExpenseCategoriesToBudget(budget, budgetRequest);
 
+        if (!isBankAccountValid(foundUser, budgetRequest)) {
+            throw new InvalidDataException("Bank account not valid!");
+        }
+        BankAccount budgetBankAccount = bankAccountRepository.getReferenceById(budgetRequest.getBankId());
+        budgetBankAccountOperations(budgetBankAccount, budget);
+
+        budget.setBankAccount(budgetBankAccount);
         foundUser.getBudgets().add(budget);
         budget.setUser(foundUser);
+        budgetBankAccount.getBudgets().add(budget);
 
         budgetRepository.save(budget);
+        bankAccountRepository.save(budgetBankAccount);
         userRepository.save(foundUser);
 
         return MapEntity.userEntityToResponse(foundUser);
@@ -145,15 +156,32 @@ public class UserServiceImpl implements UserService {
                 .toList();
     }
 
+    private void budgetBankAccountOperations(BankAccount bankAccount, Budget budget) {
+        if (budget.getAmount().doubleValue() > bankAccount.getBalance().doubleValue()) {
+            throw new InvalidDataException("Budget amount cannot be more then your balance!");
+        }
+
+        BigDecimal newBankAccountBalance = bankAccount.getBalance().subtract(budget.getAmount());
+        bankAccount.setBalance(newBankAccountBalance);
+    }
+
+    private boolean isBankAccountValid(User user, BudgetRequest budgetRequest) {
+        List<BankAccount> userBankAccounts = user.getBankAccounts().stream().toList();
+        Optional<BankAccount> budgetRequestBankAccount = bankAccountRepository.findById(budgetRequest.getBankId());
+
+        return budgetRequestBankAccount
+                .filter(userBankAccounts::contains)
+                .isPresent();
+    }
+
     private void setExpenseCategoriesToBudget(Budget budget, BudgetRequest budgetRequest) {
-        List<ExpenseCategory> expenseCategories = expenseCategoryRepository.findAll();
         Set<ExpenseCategory> expenseCategoriesForBudget = new HashSet<>();
 
-        expenseCategories.forEach(expenseCategory -> budgetRequest.getExpenseCategories().forEach(categoryName -> {
-            if (categoryName.equals(expenseCategory.getCategoryName())) {
-                expenseCategoriesForBudget.add(expenseCategory);
-            }
-        }));
+        budgetRequest.getExpenseCategories().forEach(categoryName -> {
+            ExpenseCategory expenseCategory = expenseCategoryRepository.findByCategoryName(categoryName)
+                    .orElseThrow(() -> new NotFoundException("Expense Categories non existent!"));
+            expenseCategoriesForBudget.add(expenseCategory);
+        });
 
         budget.setExpenseCategories(expenseCategoriesForBudget);
     }

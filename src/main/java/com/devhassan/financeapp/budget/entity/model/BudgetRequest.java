@@ -1,5 +1,6 @@
 package com.devhassan.financeapp.budget.entity.model;
 
+import com.devhassan.financeapp.expensecategory.entity.enums.CategoryName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,8 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BudgetRequest {
+    private String name;
     private BigDecimal amount;
+    private Long bankId;
     private LocalDate startDate;
     private LocalDate endDate;
-    List<String> expenseCategories;
+    List<CategoryName> expenseCategories;
 }

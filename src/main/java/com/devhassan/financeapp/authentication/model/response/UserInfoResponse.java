@@ -13,5 +13,7 @@ import java.util.UUID;
 public class UserInfoResponse {
     private UUID id;
     private String email;
+    private String firstName;
+    private String lastName;
     private List<String> roles;
 }

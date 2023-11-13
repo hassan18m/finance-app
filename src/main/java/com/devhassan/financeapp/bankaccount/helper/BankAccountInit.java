@@ -33,6 +33,7 @@ public class BankAccountInit {
                 .closedDate(null)
                 .status(AccountStatus.ACTIVE)
                 .transactions(new HashSet<>())
+                .budgets(new HashSet<>())
                 .build();
     }
 }

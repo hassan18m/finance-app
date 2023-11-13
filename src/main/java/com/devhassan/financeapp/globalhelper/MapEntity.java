@@ -98,13 +98,6 @@ public class MapEntity {
 
     public static Transaction transactionRequestToEntity(TransactionRequest transactionRequest) {
         Transaction transaction = new Transaction();
-        boolean isExpenseTransaction = transactionRequest.getTransactionType() == TransactionType.EXPENSE;
-
-        ExpenseCategory expenseCategory = new ExpenseCategory();
-        expenseCategory.setCategoryName(transactionRequest.getCategoryName());
-        if (isExpenseTransaction) {
-            transaction.setExpenseCategory(expenseCategory);
-        }
 
         transaction.setAmount(transactionRequest.getAmount());
         transaction.setTransactionDateTime(LocalDateTime.now());
@@ -119,6 +112,7 @@ public class MapEntity {
 
     public static Budget budgetRequestToEntity(BudgetRequest budgetRequest) {
         Budget budget = new Budget();
+        budget.setName(budgetRequest.getName());
         budget.setAmount(budgetRequest.getAmount());
         budget.setStartDate(budgetRequest.getStartDate());
         budget.setEndDate(budgetRequest.getEndDate());
@@ -129,9 +123,11 @@ public class MapEntity {
     public static BudgetResponse budgetEntityToResponse(Budget budget) {
         BudgetResponse budgetResponse = new BudgetResponse();
         budgetResponse.setId(budget.getId());
+        budgetResponse.setName(budget.getName());
         budgetResponse.setAmount(budget.getAmount());
         budgetResponse.setStartDate(budget.getStartDate());
         budgetResponse.setEndDate(budget.getEndDate());
+        budgetResponse.setBankAccountId(budget.getBankAccount().getId());
         budgetResponse.setExpenseCategories(budget.getExpenseCategories()
                 .stream()
                 .map(MapEntity::budgetExpenseCategoryEntityToResponse)
@@ -159,7 +155,7 @@ public class MapEntity {
     }
 
     // ExpenseCategory response for budget entity
-    private static ExpenseCategoryResponse budgetExpenseCategoryEntityToResponse(ExpenseCategory expenseCategory) {
+    public static ExpenseCategoryResponse budgetExpenseCategoryEntityToResponse(ExpenseCategory expenseCategory) {
         ExpenseCategoryResponse expenseCategoryResponse = new ExpenseCategoryResponse();
         expenseCategoryResponse.setCategoryName(expenseCategory.getCategoryName());
 

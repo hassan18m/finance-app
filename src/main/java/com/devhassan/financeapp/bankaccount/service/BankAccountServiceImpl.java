@@ -17,7 +17,7 @@ import com.devhassan.financeapp.transaction.repository.TransactionRepository;
 import com.devhassan.financeapp.exceptions.NotFoundException;
 import com.devhassan.financeapp.user.entity.User;
 import com.devhassan.financeapp.user.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -25,32 +25,33 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class BankAccountServiceImpl implements BankAccountService {
-
     private final BankAccountRepository bankAccountRepository;
     private final TransactionRepository transactionRepository;
     private final FinancialInsightService financialInsightService;
     private final ExpenseCategoryRepository expenseCategoryRepository;
     private final UserRepository userRepository;
 
-    @Autowired
-    public BankAccountServiceImpl(BankAccountRepository bankAccountRepository,
-                                  TransactionRepository transactionRepository,
-                                  FinancialInsightService financialInsightService,
-                                  ExpenseCategoryRepository expenseCategoryRepository,
-                                  UserRepository userRepository) {
-        this.bankAccountRepository = bankAccountRepository;
-        this.transactionRepository = transactionRepository;
-        this.financialInsightService = financialInsightService;
-        this.expenseCategoryRepository = expenseCategoryRepository;
-        this.userRepository = userRepository;
-    }
-
     @Override
     public BankAccountResponse getBankAccountByAccountNumber(String accountNumber) {
         return bankAccountRepository.findByAccountNumber(accountNumber)
                 .map(MapEntity::bankAccountEntityToResponse)
                 .orElseThrow(() -> new NotFoundException("Account with number: " + accountNumber + " not found!"));
+    }
+
+    @Override
+    public BankAccountResponse getBankAccountById(Long bankAccountId) {
+        return bankAccountRepository.findById(bankAccountId)
+                .map(MapEntity::bankAccountEntityToResponse)
+                .orElseThrow(() -> new NotFoundException("Bank Account not found!"));
+    }
+
+    @Override
+    public BigDecimal getBalanceOfBankAccount(Long bankAccountId) {
+        return bankAccountRepository.findById(bankAccountId)
+                .orElseThrow(() -> new NotFoundException("Bank Account not found!"))
+                .getBalance();
     }
 
     @Override
@@ -91,6 +92,7 @@ public class BankAccountServiceImpl implements BankAccountService {
                 .orElseThrow(() -> new NotFoundException("Bank account not found!"));
 
         Transaction transaction = MapEntity.transactionRequestToEntity(transactionRequest);
+        setExpenseCategoryToExpenseTransaction(transaction, transactionRequest);
         transaction.setBankAccount(foundBankAccount);
 
         boolean isExpenseTransaction = transaction.getTransactionType() == TransactionType.EXPENSE;
@@ -160,5 +162,11 @@ public class BankAccountServiceImpl implements BankAccountService {
         List<BankAccount> usersBankAccounts = foundUser.getBankAccounts().stream().toList();
 
         bankAccountRepository.deleteAll(usersBankAccounts);
+    }
+
+    private void setExpenseCategoryToExpenseTransaction(Transaction transaction, TransactionRequest transactionRequest) {
+        expenseCategoryRepository
+                .findByCategoryName(transactionRequest.getCategoryName())
+                .ifPresent(transaction::setExpenseCategory);
     }
 }

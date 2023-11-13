@@ -2,6 +2,7 @@ package com.devhassan.financeapp.bankaccount.entity;
 
 import com.devhassan.financeapp.bankaccount.entity.enums.AccountStatus;
 import com.devhassan.financeapp.bankaccount.entity.enums.AccountType;
+import com.devhassan.financeapp.budget.entity.Budget;
 import com.devhassan.financeapp.transaction.entity.Transaction;
 import com.devhassan.financeapp.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -61,6 +62,10 @@ public class BankAccount {
     @OneToMany(mappedBy = "bankAccount",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @ToString.Exclude
     private Set<Transaction> transactions;
+
+    @OneToMany(mappedBy = "bankAccount",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private Set<Budget> budgets;
 
     @Override
     public int hashCode() {
