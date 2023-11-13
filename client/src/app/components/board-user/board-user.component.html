@@ -96,7 +96,7 @@
                 <mat-panel-title>
                     Budgets
                 </mat-panel-title>
-                <mat-panel-description>
+                <mat-panel-description *ngIf="userDetails.budgets">
                     {{ userDetails.budgets.length }}
                     <mat-icon>trending_up</mat-icon>
                 </mat-panel-description>

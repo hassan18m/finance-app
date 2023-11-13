@@ -37,9 +37,7 @@ export class AddIncomeTransactionComponent {
       this.addIncomeTransactionReq.location = this.form.value.location;
     }
 
-    this.transactionService.addIncomeTransaction(this.addIncomeTransactionReq, this.bankAccountId).subscribe({
-      error: err => console.log(err)
-    });
+    this.transactionService.addIncomeTransaction(this.addIncomeTransactionReq, this.bankAccountId).subscribe();
   }
 
   onSubmit() {

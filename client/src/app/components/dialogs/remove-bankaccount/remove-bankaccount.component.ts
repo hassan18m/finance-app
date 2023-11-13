@@ -23,9 +23,6 @@ export class RemoveBankaccountComponent implements OnInit {
     this.bankAccountService.getBankAccounts().subscribe({
       next: res => {
         this.userBankAccounts = res;
-      },
-      error: err => {
-        console.log(err);
       }
     });
   }

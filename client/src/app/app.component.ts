@@ -24,25 +24,17 @@ export class AppComponent implements OnInit {
     if (this.isLoggedIn) {
 
       const user = this.storageService.getUser();
-      console.log(user);
       this.roles = user.roles;
 
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
 
-      this.username = user.email;
+      this.username = user.firstName;
     }
   }
 
   logout(): void {
-    this.authService.logout().subscribe({
-      next: res => {
-        console.log(res);
-      },
-      error: err => {
-        console.log(err);
-      }
-    });
+    this.authService.logout().subscribe();
     this.clearDataAndNavigateToHome();
   }
 

@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 export class HomeComponent implements OnInit {
   content?: string;
 
-  constructor(private userService: UserService,private storageService: StorageService) { }
+  constructor(private userService: UserService, private storageService: StorageService) { }
 
   ngOnInit(): void {
     this.userService.getPublicContent().subscribe({
@@ -18,7 +18,6 @@ export class HomeComponent implements OnInit {
         this.content = data;
       },
       error: err => {
-        console.log(err)
         if (err.error) {
           this.content = JSON.parse(err.error).message;
         } else {

@@ -39,6 +39,12 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AddExpenseTransactionComponent } from './components/dialogs/add-expense-transaction/add-expense-transaction.component';
 import { AddIncomeTransactionComponent } from './components/dialogs/add-income-transaction/add-income-transaction.component';
+import { BudgetsComponent } from './components/budgets/budgets.component';
+import { BudgetExpenseCategoriesComponent } from './components/dialogs/budget-expense-categories/budget-expense-categories.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { AddBudgetComponent } from './components/dialogs/add-budget/add-budget.component';
+import { RemoveBudgetComponent } from './components/dialogs/remove-budget/remove-budget.component';
+import { UpdateBudgetComponent } from './components/dialogs/update-budget/update-budget.component';
 
 
 
@@ -60,6 +66,11 @@ import { AddIncomeTransactionComponent } from './components/dialogs/add-income-t
     ShowTransactionsComponent,
     AddExpenseTransactionComponent,
     AddIncomeTransactionComponent,
+    BudgetsComponent,
+    BudgetExpenseCategoriesComponent,
+    AddBudgetComponent,
+    RemoveBudgetComponent,
+    UpdateBudgetComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,7 +96,8 @@ import { AddIncomeTransactionComponent } from './components/dialogs/add-income-t
     MatDividerModule,
     MatProgressBarModule,
     MatStepperModule,
-    MatTabsModule
+    MatTabsModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

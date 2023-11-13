@@ -57,4 +57,9 @@ export class BankAccountService {
     const updateURL: string = this.bankAccountURL + 'update/' + bankAccountId;
     return this.http.patch<BankAccount>(updateURL, bankAccountUpdate, { withCredentials: true });
   }
+
+  getBalanceOfBankAccount(bankAccountId: number): Observable<number> {
+    const bankBalanceURL = this.bankAccountURL + bankAccountId + '/balance';
+    return this.http.get<number>(bankBalanceURL, { withCredentials: true });
+  }
 }

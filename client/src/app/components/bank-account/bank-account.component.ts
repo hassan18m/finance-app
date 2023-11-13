@@ -35,9 +35,6 @@ export class BankAccountComponent implements OnInit {
     this.bankAccountService.getBankAccounts().subscribe({
       next: res => {
         this.bankAccounts = res;
-      },
-      error: err => {
-        console.log(err);
       }
     })
   }

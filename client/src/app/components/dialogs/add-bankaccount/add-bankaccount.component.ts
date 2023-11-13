@@ -31,7 +31,7 @@ export class AddBankAccountComponent {
       this.addBankAccountReq.accountType = this.form.value.accountType;
       this.addBankAccountReq.currency = this.form.value.accountCurrency;
 
-      this.bankAccountService.addBankAccount(this.addBankAccountReq).subscribe({ error: err => console.log(err) });
+      this.bankAccountService.addBankAccount(this.addBankAccountReq).subscribe();
     }
   }
 

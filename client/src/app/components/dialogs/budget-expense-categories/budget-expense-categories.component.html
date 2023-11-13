@@ -1,0 +1,7 @@
+<div class="container">
+    <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Color selection">
+        <mat-chip-option *ngFor="let expenseCategory of expenseCategories" selected color="green">
+            {{expenseCategory.categoryName}}
+        </mat-chip-option>
+    </mat-chip-listbox>
+</div>

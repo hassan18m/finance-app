@@ -5,5 +5,6 @@ export class Budget {
         public amount: number,
         public startDate: Date,
         public endDate: Date,
-        public expenseCategories: BudgetExpenseCategory[]) { }
+        public expenseCategories: BudgetExpenseCategory[],
+        public bankAccountId: number) { }
 }

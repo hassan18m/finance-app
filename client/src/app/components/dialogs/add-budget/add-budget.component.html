@@ -1,0 +1,58 @@
+<form (click)="onSubmit()" [formGroup]="form">
+    <h2 mat-dialog-title>New Budget</h2>
+    <mat-dialog-content class="mat-typography">
+        <div class="example-container">
+            <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="My Budget" formControlName="name" required>
+                <mat-error *ngIf="form.controls.amount.hasError('required')">Field required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Bank Account</mat-label>
+                <mat-select formControlName="bankId" required>
+                    <mat-option [value]="bankAccount.id"
+                        *ngFor="let bankAccount of userBankAccounts">{{bankAccount.accountNumber}} |
+                        {{bankAccount.balance | currency: bankAccount.currency}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.controls.bankId.hasError('required')">Field required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Enter Amount</mat-label>
+                <input type="number" matInput placeholder="123.45" formControlName="amount" required>
+                <mat-error *ngIf="form.controls.amount.hasError('min')">Minimum amount: 0.01</mat-error>
+                <mat-error *ngIf="form.controls.amount.hasError('required')">Field required</mat-error>
+                <mat-error *ngIf="form.controls.amount.hasError('max')">Amount > Bank Account balance</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                    <input matStartDate formControlName="start" placeholder="Start date">
+                    <input matEndDate formControlName="end" placeholder="End date">
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+
+                <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Expense Categories</mat-label>
+                <mat-select [formControl]="expenseCategoriesForm" multiple required>
+                    <mat-option *ngFor="let expenseCategory of expenseCategoriesList"
+                        [value]="expenseCategory">{{expenseCategory}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="expenseCategoriesForm.hasError('required')"> Pick at least 1!</mat-error>
+            </mat-form-field>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>CANCEL</button>
+        <button mat-button cdkFocusInitial (click)="addBudget()"
+            *ngIf="!form.invalid &&range.value.start!==null && range.value.end!==null">SUBMIT</button>
+    </mat-dialog-actions>
+</form>

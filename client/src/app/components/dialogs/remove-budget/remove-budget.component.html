@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Remove budget ID: {{budgetId}}</h1>
+<div mat-dialog-content>
+    Are you sure you want to remove this budget?
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>NO</button>
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="removeBudget()">YES</button>
+</div>

@@ -36,7 +36,7 @@ export class UserService {
   }
 
   getAdminBoard(): Observable<any> {
-    return this.http.get(API_URL + 'admin', { responseType: 'text' });
+    return this.http.get(API_URL + 'admin', { responseType: 'text', withCredentials: true });
   }
 
   getTotalBalance(): Observable<any> {

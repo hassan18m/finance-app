@@ -1,0 +1,23 @@
+<form (click)="onSubmit()" [formGroup]="form">
+    <h2 mat-dialog-title>Update Budget</h2>
+    <mat-dialog-content class="mat-typography">
+        <div class="example-container">
+            <mat-form-field>
+                <mat-label>Enter Amount</mat-label>
+                <input type="number" matInput placeholder="123.45" formControlName="amount">
+                <mat-error *ngIf="form.controls.amount.hasError('min')">Minimum amount: 0.01</mat-error>
+                <mat-error *ngIf="form.controls.amount.hasError('max')">Amount > Bank Account balance</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Enter Name</mat-label>
+                <input matInput placeholder="My budget" formControlName="name">
+                <mat-error *ngIf="form.controls.amount.hasError('minlength')">Minimum length: 3</mat-error>
+            </mat-form-field>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>CANCEL</button>
+        <button mat-button cdkFocusInitial (click)="updateBudget()" *ngIf="submitted &&form.valid">SUBMIT</button>
+    </mat-dialog-actions>
+</form>

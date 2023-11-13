@@ -57,8 +57,6 @@ export class RegisterComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-
-    console.log(JSON.stringify(this.form.value, null, 2));
   }
 
   onReset(): void {
@@ -78,10 +76,6 @@ export class RegisterComponent implements OnInit {
       this.authService.register(userRegister).subscribe({
         next: res => {
           this.router.navigate(['/login']);
-        },
-        error: err => {
-          console.log(userRegister);
-          console.log(err);
         }
       });
     }

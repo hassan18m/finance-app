@@ -16,7 +16,7 @@ export class BoardUserComponent implements OnInit {
   noOfBankAccounts!: number;
   transactions: Transaction[] = [];
   noOfTransactions!: number;
-  userTotalBalance!: number;
+  userTotalBalance: number = 0;
 
   ngOnInit(): void {
     this.getUserDetails();
@@ -31,10 +31,6 @@ export class BoardUserComponent implements OnInit {
         this.noOfBankAccounts = this.userDetails.bankAccounts.length;
         this.pushTransaction(this.userDetails.bankAccounts, this.transactions);
         this.noOfTransactions = this.transactions.length;
-        console.log(this.userDetails);
-      },
-      error: err => {
-        console.log(err);
       }
     })
   }
@@ -50,11 +46,7 @@ export class BoardUserComponent implements OnInit {
   getTotalBudget(): void {
     this.userService.getTotalBalance().subscribe({
       next: res => {
-        console.log(res);
         this.userTotalBalance = res;
-      },
-      error: err => {
-        console.log(err);
       }
     });
   }

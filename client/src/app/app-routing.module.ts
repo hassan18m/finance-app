@@ -10,6 +10,7 @@ import { BoardModeratorComponent } from './components/board-moderator/board-mode
 import { BoardAdminComponent } from './components/board-admin/board-admin.component';
 import { BankAccountComponent } from './components/bank-account/bank-account.component';
 import { RemoveBankaccountComponent } from './components/dialogs/remove-bankaccount/remove-bankaccount.component';
+import { BudgetsComponent } from './components/budgets/budgets.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'mod', component: BoardModeratorComponent },
   { path: 'admin', component: BoardAdminComponent },
   { path: 'bank-account', component: BankAccountComponent },
+  { path: 'budgets', component: BudgetsComponent },
   { path: 'remove-bank-account', component: RemoveBankaccountComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
