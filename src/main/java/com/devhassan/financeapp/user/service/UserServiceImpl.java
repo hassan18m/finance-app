@@ -17,31 +17,19 @@ import com.devhassan.financeapp.exceptions.DuplicateDataException;
 import com.devhassan.financeapp.exceptions.NotFoundException;
 import com.devhassan.financeapp.globalhelper.MapEntity;
 import com.devhassan.financeapp.user.repository.UserRepository;
-import jakarta.validation.constraints.NotNull;
-import lombok.NonNull;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final BankAccountRepository bankAccountRepository;
     private final BudgetRepository budgetRepository;
     private final ExpenseCategoryRepository expenseCategoryRepository;
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository,
-                           BankAccountRepository bankAccountRepository,
-                           BudgetRepository budgetRepository,
-                           ExpenseCategoryRepository expenseCategoryRepository) {
-        this.userRepository = userRepository;
-        this.bankAccountRepository = bankAccountRepository;
-        this.budgetRepository = budgetRepository;
-        this.expenseCategoryRepository = expenseCategoryRepository;
-    }
 
     @Override
     public List<UserResponse> findAllUsers() {
