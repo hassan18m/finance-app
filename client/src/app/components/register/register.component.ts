@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserRegisterRequest } from 'src/app/types/user-register-req';
@@ -8,75 +14,49 @@ import Validation from 'src/app/types/validation';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-
-  form: FormGroup = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    email: new FormControl(''),
-    password: new FormControl(''),
-    confirmPassword: new FormControl('')
+  form = new FormGroup({
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+    ]),
+    confirmPassword: new FormControl('', [Validators.required]),
   });
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group(
-      {
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        password: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(40)
-          ]
-        ],
-        confirmPassword: ['', Validators.required],
-      },
-      {
-        validators: [Validation.match('password', 'confirmPassword')]
-      }
-    );
   }
 
-  get f(): { [key: string]: AbstractControl } {
-    return this.form.controls;
+  addValidator() {
+    this.form.controls.confirmPassword.addValidators(
+      Validators.pattern(this.form.value.password!)
+    );
   }
 
   onSubmit(): void {
     this.submitted = true;
-
-    if (this.form.invalid) {
-      return;
-    }
-  }
-
-  onReset(): void {
-    this.submitted = false;
-    this.form.reset();
   }
 
   regUser(): void {
     if (this.submitted && !this.form.invalid) {
       const userRegister: UserRegisterRequest = {
-        firstName: this.form.value.firstName,
-        lastName: this.form.value.lastName,
-        email: this.form.value.email,
-        password: this.form.value.password
-      }
+        firstName: this.form.value.firstName!,
+        lastName: this.form.value.lastName!,
+        email: this.form.value.email!,
+        password: this.form.value.password!,
+      };
 
       this.authService.register(userRegister).subscribe({
-        next: res => {
+        next: (res) => {
           this.router.navigate(['/login']);
-        }
+        },
       });
     }
   }
