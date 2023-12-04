@@ -31,8 +31,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   addValidator() {
     this.form.controls.confirmPassword.addValidators(

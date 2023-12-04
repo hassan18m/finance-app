@@ -12,29 +12,35 @@ import { UpdateBudgetComponent } from '../dialogs/update-budget/update-budget.co
 @Component({
   selector: 'app-budgets',
   templateUrl: './budgets.component.html',
-  styleUrls: ['./budgets.component.css']
+  styleUrls: ['./budgets.component.css'],
 })
 export class BudgetsComponent implements OnInit {
   budgets!: Budget[];
 
-  constructor(private budgetService: BudgetService,
+  constructor(
+    private budgetService: BudgetService,
     private dialog: MatDialog,
-    private _snackBar: MatSnackBar) { }
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.getUserBudgets();
   }
 
-  openExpenseCategoriesDialog(budgetExpenseCategories: BudgetExpenseCategory[]) {
-    const dialogRef = this.dialog.open(BudgetExpenseCategoriesComponent, { data: budgetExpenseCategories });
+  openExpenseCategoriesDialog(
+    budgetExpenseCategories: BudgetExpenseCategory[]
+  ) {
+    const dialogRef = this.dialog.open(BudgetExpenseCategoriesComponent, {
+      data: budgetExpenseCategories,
+    });
   }
 
   openUpdateBudgetDialog(budget: Budget) {
     const dialogRef = this.dialog.open(UpdateBudgetComponent, { data: budget });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        this.openSnackBar("Budget updated successfully!")
+        this.openSnackBar('Budget updated successfully!');
       } else if (result !== true && result !== false) {
         this.openSnackBar(result);
       }
@@ -42,35 +48,37 @@ export class BudgetsComponent implements OnInit {
   }
 
   openRemoveBudgetDialog(budgetId: number) {
-    const dialogRef = this.dialog.open(RemoveBudgetComponent, { data: budgetId });
+    const dialogRef = this.dialog.open(RemoveBudgetComponent, {
+      data: budgetId,
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
         this.ngOnInit();
-        this.openSnackBar("Budget successfully removed!");
+        this.openSnackBar('Budget successfully removed!');
       } else if (result === 'error') {
-        this.openSnackBar("Error removing budget, try again!");
+        this.openSnackBar('Error removing budget, try again!');
       }
     });
   }
 
   getUserBudgets() {
     this.budgetService.getUserBudgets().subscribe({
-      next: res => {
+      next: (res) => {
         this.budgets = res;
-      }
-    })
+      },
+    });
   }
 
   addBudgetToUserDialog() {
     const dialogRef = this.dialog.open(AddBudgetComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
         this.ngOnInit();
-        this.openSnackBar("Budget successfully added!");
+        this.openSnackBar('Budget successfully added!');
       } else if (result === 'error') {
-        this.openSnackBar("Error adding budget, try again!");
+        this.openSnackBar('Error adding budget, try again!');
       }
     });
   }
