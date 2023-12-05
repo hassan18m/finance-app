@@ -1,5 +1,9 @@
 <div class="container">
     <header class="jumbotron">
-        <p>Number of users: {{content}}</p>
+        <p>Number of users: {{ content.noOfUsers }}</p>
+        <p>Total money in circulation: {{ content.moneyInCirculation | currency:' ' }} RON</p>
+        <p>Number of Bank Accounts created: {{ content.noOfBankAccounts }}</p>
+        <p>Completed transactions: {{ content.noOfTransactions }}</p>
+        <p>Most Used Bank: {{ content.mostUsedBank }}</p>
     </header>
 </div>

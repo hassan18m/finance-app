@@ -17,15 +17,17 @@ import { AddIncomeTransactionComponent } from '../dialogs/add-income-transaction
 @Component({
   selector: 'app-test-split-screen',
   templateUrl: './bank-account.component.html',
-  styleUrls: ['./bank-account.component.css']
+  styleUrls: ['./bank-account.component.css'],
 })
 export class BankAccountComponent implements OnInit {
   bankAccounts!: BankAccount[];
 
-  constructor(private bankAccountService: BankAccountService,
+  constructor(
+    private bankAccountService: BankAccountService,
     private transactionService: TransactionService,
     private _snackBar: MatSnackBar,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.getBankAccounts();
@@ -33,27 +35,29 @@ export class BankAccountComponent implements OnInit {
 
   getBankAccounts() {
     this.bankAccountService.getBankAccounts().subscribe({
-      next: res => {
+      next: (res) => {
         this.bankAccounts = res;
-      }
-    })
+      },
+    });
   }
 
   openAddBankAccountDialog() {
     const dialogRef = this.dialog.open(AddBankAccountComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        this.openSnackBar("Account successfully added!");
         this.ngOnInit();
+        this.openSnackBar('Account successfully added!');
       }
     });
   }
 
   openUpdateBankAccountDialog(bankAccountToUpdate: BankAccount) {
-    const dialogRef = this.dialog.open(UpdateBankaccountComponent, { data: bankAccountToUpdate });
+    const dialogRef = this.dialog.open(UpdateBankaccountComponent, {
+      data: bankAccountToUpdate,
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === 'Account updated successfully!') {
         this.ngOnInit();
         this.openSnackBar(result);
@@ -64,50 +68,56 @@ export class BankAccountComponent implements OnInit {
     });
   }
 
-
   deleteBankAccount(bankAccountId: number): void {
-    this.bankAccountService.deleteBankAccount(bankAccountId.toString()).subscribe({
-      next: res => {
-        this.openSnackBar('Account successfully deleted!');
-        this.ngOnInit();
-      },
-      error: err => {
-        this.openSnackBar('There was an error deleting account!');
-      }
-    });
+    this.bankAccountService
+      .deleteBankAccount(bankAccountId.toString())
+      .subscribe({
+        next: (res) => {
+          this.openSnackBar('Account successfully deleted!');
+          this.ngOnInit();
+        },
+        error: (err) => {
+          this.openSnackBar('There was an error deleting account!');
+        },
+      });
   }
 
   openTransactionsDialog(transactions: Transaction[]) {
-    const dialogRef = this.dialog.open(ShowTransactionsComponent, { data: transactions });
+    const dialogRef = this.dialog.open(ShowTransactionsComponent, {
+      data: transactions,
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       this.ngOnInit();
     });
   }
 
   openExpenseTransactionDialog(bankAccountId: number) {
-    const dialogRef = this.dialog.open(AddExpenseTransactionComponent, { data: bankAccountId });
+    const dialogRef = this.dialog.open(AddExpenseTransactionComponent, {
+      data: bankAccountId,
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === 'Balance too low! Transaction cancelled.') {
         this.openSnackBar(result);
       }
       if (result === true) {
-        this.openSnackBar("Transaction successfully added!");
+        this.openSnackBar('Transaction successfully added!');
         this.ngOnInit();
       }
     });
   }
 
   openIncomeTransactionDialog(bankAccountId: number) {
-    const dialogRef = this.dialog.open(AddIncomeTransactionComponent, { data: bankAccountId });
+    const dialogRef = this.dialog.open(AddIncomeTransactionComponent, {
+      data: bankAccountId,
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        this.openSnackBar("Transaction successfully added!");
+        this.openSnackBar('Transaction successfully added!');
         this.ngOnInit();
       } else {
-
       }
     });
   }

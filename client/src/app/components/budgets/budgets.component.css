@@ -5,13 +5,13 @@
 }
 
 .example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-image: url(src\assets\images\budget-icon.svg);
     background-size: cover;
 }
 
 .card-container {
     margin-left: auto;
-    padding: 5%;
+    padding: 10px;
     display: flex;
 }
 

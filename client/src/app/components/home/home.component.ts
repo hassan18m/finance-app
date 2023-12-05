@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/services/storage.service';
 import { UserService } from 'src/app/services/user.service';
+import { Content } from './content';
 
 @Component({
   selector: 'app-home',
@@ -8,12 +9,15 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  content?: string;
+  content: Content = {
+    noOfUsers: 0,
+    moneyInCirculation: 0,
+    noOfBankAccounts: 0,
+    noOfTransactions: 0,
+    mostUsedBank: '',
+  };
 
-  constructor(
-    private userService: UserService,
-    private storageService: StorageService
-  ) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.userService.getPublicContent().subscribe({
@@ -21,11 +25,7 @@ export class HomeComponent implements OnInit {
         this.content = data;
       },
       error: (err) => {
-        if (err.error) {
-          this.content = JSON.parse(err.error).message;
-        } else {
-          this.content = 'Error with status: ' + err.status;
-        }
+        console.log(err);
       },
     });
   }
