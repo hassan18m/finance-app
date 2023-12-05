@@ -10,6 +10,7 @@ import com.devhassan.financeapp.budget.repository.BudgetRepository;
 import com.devhassan.financeapp.exceptions.InvalidDataException;
 import com.devhassan.financeapp.expensecategory.entity.ExpenseCategory;
 import com.devhassan.financeapp.expensecategory.repository.ExpenseCategoryRepository;
+import com.devhassan.financeapp.globalhelper.Converter;
 import com.devhassan.financeapp.user.entity.User;
 import com.devhassan.financeapp.user.entity.model.UserRequest;
 import com.devhassan.financeapp.user.entity.model.UserResponse;
@@ -76,7 +77,7 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .mapToDouble(bankAccount -> {
                     double bankAccountBalance = bankAccount.getBalance().doubleValue();
-                    return convertToRon(bankAccountBalance, bankAccount.getCurrency());
+                    return Converter.convertToRon(bankAccountBalance, bankAccount.getCurrency());
                 })
                 .sum();
 
@@ -174,13 +175,6 @@ public class UserServiceImpl implements UserService {
         budget.setExpenseCategories(expenseCategoriesForBudget);
     }
 
-    private double convertToRon(double value, String currency) {
-        return switch (currency) {
-            case "USD" -> value * 4;
-            case "EUR" -> value * 5;
-            default -> value;
-        };
-    }
 
     private List<String> getAccountNumbers() {
         return bankAccountRepository.findAll()

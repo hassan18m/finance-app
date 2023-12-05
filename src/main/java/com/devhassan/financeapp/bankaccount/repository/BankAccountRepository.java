@@ -9,5 +9,6 @@ import java.util.UUID;
 
 public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
     Optional<BankAccount> findByAccountNumber(String accountNumber);
+
     List<BankAccount> findBankAccountsByUser_Id(UUID userId);
 }

@@ -16,7 +16,7 @@ public class TestController {
 
     @GetMapping("/all")
     public ResponseEntity<?> allAccess() {
-        return ResponseEntity.ok(testService.numberOfUsers());
+        return ResponseEntity.ok(testService.getStatistics());
     }
 
     @GetMapping("/user")
