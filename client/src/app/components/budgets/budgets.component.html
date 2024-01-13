@@ -9,11 +9,11 @@
             <mat-card-title>{{ budget.name }}</mat-card-title>
             <mat-card-subtitle>{{budget.amount}}</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image src="\assets\images\Budget-PNG-Pic.png" alt="Photo of a Shiba Inu">
+        <img mat-card-image src="\assets\images\Budget-PNG-Pic.png" alt="Budget">
         <mat-card-content>
             <button mat-fab extended color="primary" class="ex-button"
                 (click)="openExpenseCategoriesDialog(budget.expenseCategories)">
-                <mat-icon>favorite</mat-icon>
+                <mat-icon>zoom_out_map</mat-icon>
                 EC: {{ budget.expenseCategories.length }}
             </button>
         </mat-card-content>
